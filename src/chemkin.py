@@ -2,14 +2,15 @@ import numpy as np
 import xml.etree.ElementTree as ET
 
 class inputReader:
-	
+
 	def __init__(self, input_path):
 		try:
 			tree = ET.parse(input_path)
 		except ValueError as err:
 			raise ValueError('Something went wrong with your XML file:\n' + str(err))
 		self.root = tree.getroot()
-		self.reactions = self.parse_reactions()
+		self.reactions = {}
+		self.parse_reactions()
 
 
 	def get_species(self):
