@@ -2,7 +2,7 @@ import numpy as np
 import xml.etree.ElementTree as ET
 
 class inputReader:
-
+	
 	def __init__(self, input_path):
 		try:
 			tree = ET.parse(input_path)
@@ -20,8 +20,9 @@ class inputReader:
 
 	def parse_reactions(self):
 		reactions = self.root.find('reactionData').findall('reaction')
-		reversible, rtype, rid = reactions.get('reversible'), reactions.get('type'), reactions.get('id')
 		for i, reaction in enumerate(reactions):
+			attributes = reaction.attrib
+			reversible, rtype, rid = attributes['reversible'], attributes['type'], attributes['id']
 			# Equation
 			equation = reaction.find('equation').text
 			# Arrhenius Params
