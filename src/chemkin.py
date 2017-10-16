@@ -28,7 +28,12 @@ class inputReader:
 			equation = reaction.find('equation').text
 			# Arrhenius Params
 			coeffs = reaction.find('rateCoeff').find('Arrhenius')
-			A, b, E =  float(coeffs.find('A').text), float(coeffs.find('b').text), float(coeffs.find('E').text)
+			A, E =  float(coeffs.find('A').text), float(coeffs.find('E').text)
+			if coeffs.find('b'):
+				arr_params = {'A': A, 'E': E, 'b': float(coeffs.find('b').text)}
+			else:
+				arr_params = {'A': A, 'E': E}
+
 			# Concentration
 			## TODO: probably need to deal with wrong input format
 			reactants = reaction.find('rateCoeff').find('reactants').text.split(' ')
@@ -36,8 +41,13 @@ class inputReader:
 			# x = np.zeros( (len(reactants) + len(products), 1) )
 			v1, v2 = np.zeros( ( len(reactants) + len(products), 1 ) ), np.zeros( ( len(reactants) + len(products), 1 ) )
 			for i in range( len(reactants) ):
+				# check format, e.g. H:1, not H:1O:2
+				if reactants[i].count(':') is not 1:
+					raise ValueError('check your reactants input format: ' + reactants)
 				v1[i] = reactants[i].split(':')[1]
 			for j in range( len(products) ):
+				if products[j].count(':') is not 1:
+					raise ValueError('check your products input format: ' + products)
 				v2[i + j + 1] = products[j].split(':')[1]
 
 			self.reactions[rid] = {
@@ -45,7 +55,7 @@ class inputReader:
 				'reversible': reversible,
 				'equation': equation,
 				'species': self.get_species(),
-				'coeff_params':{'A': A, 'b': b, 'E': E},
+				'coeff_params': arr_params,
 				'v1': v1,
 				'v2': v2
 			}
