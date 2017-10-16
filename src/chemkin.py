@@ -14,7 +14,6 @@ class ReactionParser:
 	def get_species(self):
 		species = self.root.find('phase').find('speciesArray')
 		species = species.text.strip().split(' ')
-		print ('species:{}'.format(species))
 		return species
 
 	def parse_reactions(self):
@@ -29,7 +28,7 @@ class ReactionParser:
 			# Arrhenius Params
 			const_coeff = reaction.find('rateCoeff').find('Constant')
 
-			if const_coeff:
+			if const_coeff is not None:
 				coeff_params = {'k': const_coeff}
 			else:
 				coeffs = reaction.find('rateCoeff').find('Arrhenius')
@@ -38,25 +37,29 @@ class ReactionParser:
 				except:
 					raise ValueError('did not capture Arrhenius prefactor A and activation energy E, please re-check input format')
 				
-				if coeffs.find('b'):
+				if coeffs.find('b') is not None:
 					coeff_params = {'A': A, 'E': E, 'b': float(coeffs.find('b').text)}
 				else:
 					coeff_params = {'A': A, 'E': E}
 
-			reactants = reaction.find('rateCoeff').find('reactants').text.split(' ')
-			products = reaction.find('rateCoeff').find('products').text.split(' ')
+			reactants = reaction.find('reactants').text.split(' ')
+			products = reaction.find('products').text.split(' ')
 			# x = np.zeros( (len(reactants) + len(products), 1) )
-			v1, v2 = np.zeros( ( len(reactants) + len(products), 1 ) ), np.zeros( ( len(reactants) + len(products), 1 ) )
+			#v1, v2 = np.zeros( ( len(reactants) + len(products), 1 ) ), np.zeros( ( len(reactants) + len(products), 1 ) )
+			v1, v2 = {}, {}
+			for specie in self.get_species():
+				v1[specie], v2[specie] = 0, 0
 			
 			for i in range( len(reactants) ):
 				# check format, e.g. H:1, not H:1O:2
 				if reactants[i].count(':') is not 1:
 					raise ValueError('check your reactants input format: ' + reactants)
-				v1[i] = reactants[i].split(':')[1]
+				v1[reactants[i].split(':')[0]] = reactants[i].split(':')[1]
+			
 			for j in range( len(products) ):
 				if products[j].count(':') is not 1:
 					raise ValueError('check your products input format: ' + products)
-				v2[i + j + 1] = products[j].split(':')[1]
+				v2[products[j].split(':')[0]] = products[j].split(':')[1]
 
 			reaction_dict[rid] = {
 				'type': rtype,
@@ -67,7 +70,8 @@ class ReactionParser:
 				'v1': v1,
 				'v2': v2
 			}
-			return reaction_dict
+			
+		return reaction_dict
 
 
 class ChemKin:
@@ -96,7 +100,7 @@ class ChemKin:
 			return k
 
 		@classmethod
-		def arr(self, **kwargs, T, R=8.314):
+		def arr(self, T, R=8.314, **kwargs):
 			"""Returns the Arrhenius reaction rate coeff
 		    
 			INPUTS
@@ -116,8 +120,8 @@ class ChemKin:
 		    >>> arr(10**7, 10**3, 10**2)
 		    3003549.0889639612
 		    """
-		    A, E = kwargs['A'], kwargs['E']
-		    # Check type for all args
+			A, E = kwargs['A'], kwargs['E']
+			# Check type for all args
 			if type(A) is not int and type(A) is not float:
 				raise TypeError("The Arrhenius prefactor A should be either int or float")
 			if type(E) is not int and type(E) is not float:
@@ -141,7 +145,7 @@ class ChemKin:
 			return A * np.exp( - E / (R * T) )
 
 		@classmethod
-		def mod_arr(self, **kwargs, T, R=8.314):
+		def mod_arr(self, T, R=8.314, **kwargs):
 			"""Returns the modified Arrhenius reaction rate coeff
 
 			INPUTS
@@ -224,13 +228,14 @@ class ChemKin:
 
 class Reaction:
 
-	def __init__(self, reactions):
-		self.reactions = reactions
+	def __init__(self, parser):
+		self.species = parser.get_species()
+		self.reactions = parser.parse_reactions()
 
 	def __repr__(self):
 		reaction_str = ''
-		for reaction in self.reactions:
-			reaction_str += (str(reaction) + '\n')
+		for rid, reaction in self.reactions.items():
+			reaction_str += (rid + '\n' + str(reaction) + '\n')
 
 		return 'Reactions:\n---------------\n' + reaction_str
 
@@ -238,12 +243,13 @@ class Reaction:
 		return len(self.reactions)
 
 	def reaction_components(self):
-
-		V1 = np.zeros((len(self.reactions, self.reactions['v1'].shape[1])))
-		V2 = np.zeros((len(self.reactions, self.reactions['v2'].shape[1])))
-		for i, reaction in enumerate(self.reactions):
-			V1[i] = self.reactions['v1']
-			V2[i] = self.reactions['v2']
+		
+		V1 = np.zeros((len(self.species), len(self.reactions)))
+		V2 = np.zeros((len(self.species), len(self.reactions)))
+		
+		for i, (_, reaction) in enumerate(self.reactions.items()):
+			V1[:,i] = [val for _, val in reaction['v1'].items()]
+			V2[:,i] = [val for _, val in reaction['v2'].items()]
 
 		return V1, V2
 
@@ -256,9 +262,9 @@ class Reaction:
 				coeffs.append( ChemKin.reaction_rate.constant(reaction['coeff_params']['k']) )
 			elif hasattr(reaction['coeff_params'], 'b'):
 				# modified 
-				coeffs.append( ChemKin.reaction_rate.mod_arr(reaction['coeff_params'], T) )
+				coeffs.append( T, ChemKin.reaction_rate.mod_arr(reaction['coeff_params']) )
 			else:
-				coeffs.append( ChemKin.reaction_rate.arr(reaction['coeff_params'], T) )
+				coeffs.append( T, ChemKin.reaction_rate.arr(reaction['coeff_params'], T) )
 
 		return coeffs
 			
@@ -267,8 +273,7 @@ if __name__ == "__main__":
 
 	T = 750
 	X = [2, 1, 0.5, 1, 1]
-	reactions = Reaction(ReactionParser('rxns.xml').parse_reactions())
-	print (reactions)
+	reactions = Reaction(ReactionParser('rxns.xml'))
 	V1, V2 = reactions.reaction_components()
 	k = reactions.reaction_coeff_params(T)
 	print ( ChemKin.reaction_rate(V1, V2, X, k) )
