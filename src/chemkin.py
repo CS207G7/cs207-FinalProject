@@ -138,7 +138,7 @@ class ChemKin:
 		    
 		    EXAMPLES
 		    =========
-		    >>> arr(10**7, 10**3, 10**2)
+		    >>> arr(10**2, A=10**7, E=10**3)
 		    3003549.0889639612
 		    """
 			A, E = kwargs['A'], kwargs['E']
@@ -184,7 +184,7 @@ class ChemKin:
 			
 			EXAMPLES
 			=========
-			>>> mod_arr(10**7, 0.5, 10**3, 10**2)
+			>>> mod_arr(10**2, A=10**7, b=0.5, E=10**3)
 			30035490.889639609
 			"""
 			A, E, b = kwargs['A'], kwargs['E'], kwargs['b']
@@ -301,9 +301,11 @@ class Reaction:
 				coeffs.append( ChemKin.reaction_rate.constant(reaction['coeff_params']['k']) )
 			elif hasattr(reaction['coeff_params'], 'b'):
 				# modified 
-				coeffs.append( T, ChemKin.reaction_rate.mod_arr(reaction['coeff_params']) )
+				coeffs.append( ChemKin.reaction_rate.mod_arr(T, A=reaction['coeff_params']['A'], \
+					b=reaction['coeff_params']['b'], E=reaction['coeff_params']['E'] ) )
 			else:
-				coeffs.append( T, ChemKin.reaction_rate.arr(reaction['coeff_params'], T) )
+				coeffs.append( ChemKin.reaction_rate.arr(T, A=reaction['coeff_params']['A'], \
+					E=reaction['coeff_params']['E'] ) )
 
 		return coeffs
 			
