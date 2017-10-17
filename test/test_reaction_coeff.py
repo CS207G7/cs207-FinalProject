@@ -2,7 +2,7 @@
 import sys
 sys.path.append('src')
 
-import chemkin
+from chemkin import reaction_coeff
 
 #Function: Constant 
 ## testing for correct values 
@@ -33,10 +33,10 @@ def test_constant_value_negative():
 #Function: Arrhenius reaction rate coefficient
 ## testing for correct values 
 def test_Arrhenius_value():
-     assert chemkin.ChemKin.reaction_coeff.arr(10**7, 10**3, 10**2) == 3003549.0889639612
+     assert(chemkin.ChemKin.reaction_coeff.arr(10**7, 10**3, 10**2) == 3003549.0889639612)
 
 def test_Arrhenius_value_double_check():
-     assert chemkin.ChemKin.reaction_coeff.arr(10**3, 10**4, 10**4) == 886.67297841210575
+     assert(chemkin.ChemKin.reaction_coeff.arr(10**3, 10**4, 10**4) == 886.67297841210575)
     
 ## testing for errors
 ###argument number
