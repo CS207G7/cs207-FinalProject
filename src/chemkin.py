@@ -220,10 +220,10 @@ class ChemKin:
 		"""Returns the reaction rate for a system
 		INPUTS
 		=======
-		v1: 2 x 3 float vector
-		v2: 2 x 3 float vector
-		x: 2 x 3 float vector, species concentrations
-		k: 2 x 1 float/int list, reaction coeffs
+		v1: float vector
+		v2: float vector
+		x: float vector, species concentrations
+		k: float/int list, reaction coeffs
 
 		RETURNS
 		========
