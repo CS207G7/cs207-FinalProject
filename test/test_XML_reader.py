@@ -16,15 +16,15 @@ def test_XML_bad_reactants():
     try:
         reactions = r_reader.parse_reactions()
     except Exception as err:
-        assert type(err) == TypeError, "Bad reactants should raise a TypeError."
+        assert type(err) == ValueError, "Bad reactants should raise a TypeError."
 
 def test_XML_bad_products():
     r_reader = chemkin.ReactionParser('test/xml/xml_bad_products.xml')
     try:
         reactions = r_reader.parse_reactions()
     except Exception as err:
-        assert type(err) == TypeError, "Bad products should raise a TypeError."
+        assert type(err) == ValueError, "Bad products should raise a TypeError."
 
 #test_XML_reader_1()
-#test_XML_bad_reactants()
+# test_XML_bad_reactants()
 #test_XML_bad_products()

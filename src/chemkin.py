@@ -74,12 +74,12 @@ class ReactionParser:
 			for i in range( len(reactants) ):
 				# check format, e.g. H:1, not H:1O:2
 				if reactants[i].count(':') is not 1:
-					raise ValueError('check your reactants input format: ' + reactants)
+					raise ValueError('check your reactants input format: ' + str(reactants))
 				v1[reactants[i].split(':')[0]] = reactants[i].split(':')[1]
 			
 			for j in range( len(products) ):
 				if products[j].count(':') is not 1:
-					raise ValueError('check your products input format: ' + products)
+					raise ValueError('check your products input format: ' + str(products))
 				v2[products[j].split(':')[0]] = products[j].split(':')[1]
 
 			reaction_dict[rid] = {
