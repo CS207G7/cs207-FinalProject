@@ -1,6 +1,5 @@
 import numpy as np
 import xml.etree.ElementTree as ET
-from enum import Enum
 
 class ReactionParser:
 
@@ -12,11 +11,33 @@ class ReactionParser:
 		self.root = tree.getroot()
 
 	def get_species(self):
+		""" Returns the species list of the current reaction
+	    
+		    INPUTS
+		    =======
+		    self
+		    
+		    RETURNS
+		    ========
+		    species: list of string
+		"""
 		species = self.root.find('phase').find('speciesArray')
 		species = species.text.strip().split(' ')
 		return species
 
 	def parse_reactions(self):
+
+		""" Parse the reactions from XML, and returns the reaction dictionary
+	    
+		    INPUTS
+		    =======
+		    self
+		    
+		    RETURNS
+		    ========
+		    reaction_dict: a dictionary, where key is the reaction id, val is the reaction details
+		    
+		"""
 		reaction_dict = {}
 		reactions = self.root.find('reactionData').findall('reaction')
 		
@@ -92,9 +113,9 @@ class ChemKin:
 		    
 		    EXAMPLES
 		    =========
-		    >>> const(1.0)
+		    >>> constant(1.0)
 		    1.0
-		    >>> const(3.773)
+		    >>> constant(3.773)
 		    3.773
 		    """
 			return k
@@ -202,7 +223,7 @@ class ChemKin:
 		v1: 2 x 3 float vector
 		v2: 2 x 3 float vector
 		x: 2 x 3 float vector, species concentrations
-		k: 2 x 1 float/int list, coeffs
+		k: 2 x 1 float/int list, reaction coeffs
 
 		RETURNS
 		========
@@ -210,7 +231,7 @@ class ChemKin:
 
 		EXAMPLES
 		=========
-		>>> rr([[1,2,0],[0,0,2]], [[0,0,1],[1,2,0]], [1,2,1], [10,10])
+		>>> reaction_rate([[1,2,0],[0,0,2]], [[0,0,1],[1,2,0]], [1,2,1], [10,10])
 		array([-30, -60,  20])
 		"""
 		try:
@@ -243,7 +264,16 @@ class Reaction:
 		return len(self.reactions)
 
 	def reaction_components(self):
-		
+		""" Return the V1 and V2 of the reactions
+		INPUTS
+		=======
+		self
+
+		RETURNS
+		========
+		V1: a numpy array, shows each specie's coeff in formula in the forward reaction
+		V2: a numpy array, shows each specie's coeff in formula in the backward reaction
+		"""
 		V1 = np.zeros((len(self.species), len(self.reactions)))
 		V2 = np.zeros((len(self.species), len(self.reactions)))
 		
@@ -254,7 +284,16 @@ class Reaction:
 		return V1, V2
 
 	def reaction_coeff_params(self, T):
-		
+		""" Return reation coeffs for each reactions
+		INPUTS
+		=======
+		self
+		T: float, the temperature of reaction
+
+		RETURNS
+		========
+		coeffs: a list, where coeffs[i] is the reaction coefficient for the i_th reaction
+		"""
 		coeffs = []
 		for i, reaction in enumerate(self.reactions):
 			if hasattr(reaction['coeff_params'], 'k'):
@@ -271,9 +310,39 @@ class Reaction:
 
 if __name__ == "__main__":
 
+	"""
+	parsed = ReactionParser('path_to_reaction_xml')
+	-------------------------
+	parse the XML and obtain reaction details:
+
+	1. species
+	2. basic information, such as reaction id, reaction type, reaction equations, and etc.
+	3. v1 and v2 for each reaction
+	
+	reactions = Reaction(parsed)
+	-------------------------
+	wrap the reactions information into a Reaction Class
+
+	V1, V2 = reactions.reaction_components()
+	-------------------------
+	since there could be multiple reactions inside a given reaction set, 
+	we stack each v1 into V1, and each v2 to V2
+	
+	k = reactions.reaction_coeff_params(T)
+	-------------------------
+	since the coefficient type is implicity given in the XML file. If <Arrhenius> is found, we check if 'b'
+	is given to decide using modified or regular arr; if <Constant> is found, we use constant coeff. 
+	we only need user to provide T of the current reaction set, and return the list of reaction coeffs.
+	
+	rr = ChemKin.reaction_rate(V1, V2, X, k)
+	-------------------------
+	The last thing we need user to provide is the X: concentration of species. With V1, V2, and k computed,
+	user can easily obtian reaction rate for each speicies.
+	"""
 	T = 750
 	X = [2, 1, 0.5, 1, 1]
 	reactions = Reaction(ReactionParser('rxns.xml'))
 	V1, V2 = reactions.reaction_components()
 	k = reactions.reaction_coeff_params(T)
+	print (reactions.species )
 	print ( ChemKin.reaction_rate(V1, V2, X, k) )
