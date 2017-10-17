@@ -1,4 +1,4 @@
-from chemkin.py import reaction_coeff
+from ChemKin import reaction_coeff
 
 
 
