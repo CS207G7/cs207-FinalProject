@@ -1,6 +1,11 @@
+
+import sys
+#sys.path.append('../src')
+sys.path.append('src')
+#sys.path.append('test')
+#sys.path.append('test/xml')
+
 from ChemKin import reaction_coeff
-
-
 
 #Function: Constant 
 ## testing for correct values 
