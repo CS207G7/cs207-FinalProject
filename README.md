@@ -7,7 +7,7 @@
 
 This `chemkin` is a collection of algorithms aimed at predicting the time evolution of species concentration, finding the rate of change of a chemical species and calculating the rate of change of a certain specie. For multiple irreversible elementary reactions the rate of change follows the form:
 
-![](https://github.com/CS207G7/cs207-FinalProject/blob/master/reaction_formula.jpg | width=80)
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/reaction_formula.jpg" width="60%">
 
 `chemkin` is designed for flexibility, portability, easiness of use and easiness of extension. Its software design follows an object-oriented approach and its code is written on Python.
 
