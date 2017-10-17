@@ -2,7 +2,7 @@
 import sys
 sys.path.append('src')
 
-from chemkin import reaction_coeff
+from chemkin import ChemKin.reaction_coeff
 
 #Function: Constant 
 ## testing for correct values 
