@@ -113,9 +113,9 @@ class ChemKin:
 		    
 		    EXAMPLES
 		    =========
-		    >>> constant(1.0)
+		    >>> ChemKin.reaction_coeff.constant(1.0)
 		    1.0
-		    >>> constant(3.773)
+		    >>> ChemKin.reaction_coeff.constant(3.773)
 		    3.773
 		    """
 			return k
@@ -138,7 +138,7 @@ class ChemKin:
 		    
 		    EXAMPLES
 		    =========
-		    >>> arr(10**2, A=10**7, E=10**3)
+		    >>> ChemKin.reaction_coeff.arr(10**2, A=10**7, E=10**3)
 		    3003549.0889639612
 		    """
 			A, E = kwargs['A'], kwargs['E']
@@ -184,7 +184,7 @@ class ChemKin:
 			
 			EXAMPLES
 			=========
-			>>> mod_arr(10**2, A=10**7, b=0.5, E=10**3)
+			>>> ChemKin.reaction_coeff.mod_arr(10**2, A=10**7, b=0.5, E=10**3)
 			30035490.889639609
 			"""
 			A, E, b = kwargs['A'], kwargs['E'], kwargs['b']
@@ -231,7 +231,7 @@ class ChemKin:
 
 		EXAMPLES
 		=========
-		>>> reaction_rate([[1,2,0],[0,0,2]], [[0,0,1],[1,2,0]], [1,2,1], [10,10])
+		>>> ChemKin.reaction_rate([[1,2,0],[0,0,2]], [[0,0,1],[1,2,0]], [1,2,1], [10,10])
 		array([-30, -60,  20])
 		"""
 		try:
