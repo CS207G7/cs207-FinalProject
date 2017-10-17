@@ -4,18 +4,10 @@
 [![Coverage Status](https://coveralls.io/repos/github/CS207G7/cs207-FinalProject/badge.svg?branch=master)](https://coveralls.io/github/CS207G7/cs207-FinalProject?branch=master)
 
 ### `chemkin` -- Chemical Kinetics Computational toolkit
-======
 
 This `chemkin` is a collection of algorithms aimed at predicting the time evolution of species concentration, finding the rate of change of a chemical species and calculating the rate of change of a certain specie. For multiple irreversible elementary reactions the rate of change follows the form:
 
-\begin{align}
-
-  \sum_{i=1}^{N}{\nu_{ij}^{\prime}\mathcal{S}_{i}} \longrightarrow 
-  \sum_{i=1}^{N}{\nu_{ij}^{\prime\prime}\mathcal{S}_{i}}, \qquad j = 1, \ldots, M
-
-\end{align}
-
-$$a=b$$
+![alt text](https://github.com/CS207G7/cs207-FinalProject/blob/master/reaction_formula.jpg)
 
 `chemkin` is designed for flexibility, portability, easiness of use and easiness of extension. Its software design follows an object-oriented approach and its code is written on Python.
 
