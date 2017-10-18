@@ -1,6 +1,6 @@
 import sys
 #sys.path.append('../src')
-sys.path.append('../src')
+sys.path.append('src')
 #sys.path.append('test')
 #sys.path.append('test/xml')
 
@@ -59,7 +59,7 @@ def test_XML_homework():
 #test_XML_reader_1()
 #test_XML_bad_reactants()
 #test_XML_bad_products()
-#test_XML_homework()
+# test_XML_homework()
 # test_XML_reader_2_V1()
 #test_XML_reader_2_V2()
 
