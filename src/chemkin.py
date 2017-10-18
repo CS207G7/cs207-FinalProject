@@ -274,6 +274,7 @@ class Reaction:
 		V1: a numpy array, shows each specie's coeff in formula in the forward reaction
 		V2: a numpy array, shows each specie's coeff in formula in the backward reaction
 		"""
+		print (self.species)
 		V1 = np.zeros((len(self.species), len(self.reactions)))
 		V2 = np.zeros((len(self.species), len(self.reactions)))
 		
@@ -343,7 +344,7 @@ if __name__ == "__main__":
 	"""
 	T = 750
 	X = [2, 1, 0.5, 1, 1]
-	reactions = Reaction(ReactionParser('rxns.xml'))
+	reactions = Reaction(ReactionParser('../test/xml/xml_homework.xml'))
 	V1, V2 = reactions.reaction_components()
 	k = reactions.reaction_coeff_params(T)
 	print (reactions.species )

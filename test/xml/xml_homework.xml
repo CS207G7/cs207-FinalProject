@@ -30,7 +30,7 @@
                     <k>1.0e+4</k>
                 </Constant>
             </rateCoeff>
-            <reactants>OH:1 HO:1</reactants>
+            <reactants>OH:1 HO2:1</reactants>
             <products>H20:1 O2:1</products>
         </reaction>
 
