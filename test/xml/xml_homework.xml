@@ -14,12 +14,12 @@
             <rateCoeff>
                 <Arrhenius>
                     <A units="m3/mol/s">1.0e+8</A>
-                    <b>-0.5</b>
+                    <b>0.5</b>
                     <E units="J/mol">5.0e+4</E>
                 </Arrhenius>
             </rateCoeff>
-            <reactants>H:2 O2:1</reactants>
-            <products>OH:2 H:1</products>
+            <reactants>H2:2 O2:1</reactants>
+            <products>OH:2 H2:1</products>
         </reaction>
 
         <!-- reaction 02 -->
@@ -31,7 +31,7 @@
                 </Constant>
             </rateCoeff>
             <reactants>OH:1 HO2:1</reactants>
-            <products>H20:1 O2:1</products>
+            <products>H2O:1 O2:1</products>
         </reaction>
 
        	<!-- reaction 03  -->
@@ -40,7 +40,7 @@
             <rateCoeff>
                 <Arrhenius>
                     <A units="m3/mol/s">1.0e+7</A>
-                    <E units="J/mol">1.0e+3</E>
+                    <E units="J/mol">1.0e+4</E>
                 </Arrhenius>
             </rateCoeff>
             <reactants>H2O:1 O2:1</reactants>

@@ -50,7 +50,8 @@ class ReactionParser:
 			const_coeff = reaction.find('rateCoeff').find('Constant')
 
 			if const_coeff is not None:
-				coeff_params = {'k': const_coeff}
+				k  = const_coeff.find('k')
+				coeff_params = {'K': float(k.text)}
 			else:
 				coeffs = reaction.find('rateCoeff').find('Arrhenius')
 				try:
@@ -188,7 +189,6 @@ class ChemKin:
 			30035490.889639609
 			"""
 			A, E, b = kwargs['A'], kwargs['E'], kwargs['b']
-			
 			# Check type for all args
 			if type(A) is not int and type(A) is not float:
 				raise TypeError("The Arrhenius prefactor A should be either int or float")
@@ -236,15 +236,17 @@ class ChemKin:
 		"""
 		try:
 			x = np.array(x)
-			v1 = np.array(v1)
-			v2 = np.array(v2)
+			v1 = np.array(v1).T
+			v2 = np.array(v2).T
 			k = np.array(k)
 		except TypeError as err:
 			raise TypeError("x and v should be either int or float vectors")
 		if k.any() < 0:
 			raise ValueError("reaction constant can't be negative")
+
 		ws = k * np.prod(x ** v1, axis=1)
 		rrs = np.sum((v2 - v1) * np.array([ws]).T, axis=0)
+		
 		return rrs
 
 class Reaction:
@@ -274,7 +276,7 @@ class Reaction:
 		V1: a numpy array, shows each specie's coeff in formula in the forward reaction
 		V2: a numpy array, shows each specie's coeff in formula in the backward reaction
 		"""
-		print (self.species)
+		
 		V1 = np.zeros((len(self.species), len(self.reactions)))
 		V2 = np.zeros((len(self.species), len(self.reactions)))
 		
@@ -296,16 +298,17 @@ class Reaction:
 		coeffs: a list, where coeffs[i] is the reaction coefficient for the i_th reaction
 		"""
 		coeffs = []
-		for i, reaction in enumerate(self.reactions):
-			if hasattr(reaction['coeff_params'], 'k'):
+		for _, reaction in self.reactions.items():
+			
+			if 'K' in reaction['coeff_params']:
 				# constant, T is ignored
-				coeffs.append( ChemKin.reaction_rate.constant(reaction['coeff_params']['k']) )
-			elif hasattr(reaction['coeff_params'], 'b'):
+				coeffs.append( ChemKin.reaction_coeff.constant(reaction['coeff_params']['K']) )
+			elif 'b' in reaction['coeff_params']:
 				# modified 
-				coeffs.append( ChemKin.reaction_rate.mod_arr(T, A=reaction['coeff_params']['A'], \
+				coeffs.append( ChemKin.reaction_coeff.mod_arr(T, A=reaction['coeff_params']['A'], \
 					b=reaction['coeff_params']['b'], E=reaction['coeff_params']['E'] ) )
 			else:
-				coeffs.append( ChemKin.reaction_rate.arr(T, A=reaction['coeff_params']['A'], \
+				coeffs.append( ChemKin.reaction_coeff.arr(T, A=reaction['coeff_params']['A'], \
 					E=reaction['coeff_params']['E'] ) )
 
 		return coeffs
