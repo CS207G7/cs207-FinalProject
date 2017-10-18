@@ -26,9 +26,9 @@
         <reaction reversible="yes" type="Elementary" id="reaction02">
             <equation>OH + HO2 [=] H2O + O2</equation>
             <rateCoeff>
-                <Arrhenius>
+                <Constant>
                     <k>1.0e+4</k>
-                </Arrhenius>
+                </Constant>
             </rateCoeff>
             <reactants>OH:1 HO:1</reactants>
             <products>H20:1 O2:1</products>
