@@ -7,7 +7,7 @@ sys.path.append('src')
 import chemkin
 
 def test_reaction_result():
-    V1, V2 = [[1,2,3],[2,1,2]], [[1,1,2],[5,1,1]]
+    V1, V2 = np.array([[1,2,3],[2,1,2]]).T, np.array([[1,1,2],[5,1,1]]).T
     X = [1,2,1]
     k = [6,6]
     compare = np.array([36, -24, -36])
@@ -15,7 +15,7 @@ def test_reaction_result():
     assert np.equal(output, compare).all() == 1, 'Unexpected outcome'
 
 def test_reaction_type_error():
-    V1, V2 = [[1,2,'lol'],[2,1,2]], [[1,'test',2],[5,1,1]]
+    V1, V2 = np.array([[1,2,'lol'],[2,1,2]]).T, np.array([[1,'test',2],[5,1,1]]).T
     X = [1,2,1]
     k = [6,6]
     try:
@@ -24,7 +24,7 @@ def test_reaction_type_error():
         assert type(err) == TypeError, 'Bad args format'
 
 def test_reaction_coeff_pos():
-    V1, V2 = [[1,2,3],[2,1,2]], [[1,1,2],[5,1,1]]
+    V1, V2 = np.array([[1,2,3],[2,1,2]]).T, np.array([[1,1,2],[5,1,1]]).T
     X = [1,2,1]
     k = [6, -6]
     try:
@@ -32,6 +32,6 @@ def test_reaction_coeff_pos():
     except Exception as err:
         assert type(err) == ValueError, 'Bad k'
 
-test_reaction_result()
-test_reaction_type_error()
-test_reaction_coeff_pos()
+# test_reaction_result()
+# test_reaction_type_error()
+# test_reaction_coeff_pos()
