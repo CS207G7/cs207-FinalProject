@@ -40,12 +40,12 @@ def test_XML_reader_2_V2():
     assert all(V2 == [[0], [1], [1], [0], [0]]), "XML Reader loading incorrect v1 in file xml_good2.xml"
 
 #Not yet implemented
-def test_XML_homework():
-    r_reader = chemkin.ReactionParser('test/xml/xml_homework.xml')
-    reactions = r_reader.parse_reactions()
-    reaction1 = reactions['reaction01']
+#def test_XML_homework():
+    #r_reader = chemkin.ReactionParser('test/xml/xml_homework.xml')
+    #reactions = r_reader.parse_reactions()
+    #reaction1 = reactions['reaction01']
 
-    chem = chemkin.Reaction(r_reader)
+    #chem = chemkin.Reaction(r_reader)
     #print(repr(chem))
     #chem.reaction_coeff_params()
     #V1, V2 = chem.reaction_components()
