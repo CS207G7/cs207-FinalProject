@@ -36,7 +36,7 @@
 
        	<!-- reaction 03  -->
         <reaction reversible="yes" type="Elementary" id="reaction03">
-            <equation>H20 + O2 [=] HO2 + OH</equation>
+            <equation>H2O + O2 [=] HO2 + OH</equation>
             <rateCoeff>
                 <Arrhenius>
                     <A units="m3/mol/s">1.0e+7</A>
