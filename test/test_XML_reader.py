@@ -1,6 +1,6 @@
 import sys
-#sys.path.append('../src')
-sys.path.append('src')
+sys.path.append('../src')
+#sys.path.append('src')
 #sys.path.append('test')
 #sys.path.append('test/xml')
 
@@ -26,10 +26,11 @@ def test_XML_bad_products():
         assert type(err) == ValueError, "Bad products should raise a TypeError."
 
 def test_XML_reader_2_V1():
-    r_reader = chemkin.ReactionParser('test/xml/xml_good2.xml')
+    r_reader = chemkin.ReactionParser('xml/xml_good2.xml')
     reactions = r_reader.parse_reactions()
     chem = chemkin.Reaction(r_reader)
     V1, V2 = chem.reaction_components()
+    print(repr(chem))
     print(V1)
     assert all(V1 == [[1], [0], [0], [2], [1]]), "XML Reader loading incorrect v1 in file xml_good2.xml"
 
@@ -56,6 +57,6 @@ def test_XML_reader_2_V1():
 #test_XML_bad_products()
 
 #test_XML_homework()
-#test_XML_reader_2_V1()
+test_XML_reader_2_V1()
 #test_XML_reader_2_V2()
 
