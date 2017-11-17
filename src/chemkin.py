@@ -43,7 +43,8 @@ class ReactionParser:
 		
 		for i, reaction in enumerate(reactions):
 			attributes = reaction.attrib
-			reversible, rtype, rid = attributes['reversible'], attributes['type'], attributes['id']
+			rtype, rid = attributes['type'], attributes['id']
+			reversible = 1 if attributes['reversible'] == 'yes' else 0
 			# Equation
 			equation = reaction.find('equation').text
 			# Arrhenius Params
@@ -53,7 +54,13 @@ class ReactionParser:
 				k  = const_coeff.find('k')
 				coeff_params = {'K': float(k.text)}
 			else:
+
 				coeffs = reaction.find('rateCoeff').find('Arrhenius')
+
+				if coeffs is None:
+					# modified Arrhenius
+					coeffs = reaction.find('rateCoeff').find('modifiedArrhenius')
+				
 				try:
 					A, E =  float(coeffs.find('A').text), float(coeffs.find('E').text)
 				except:
@@ -241,19 +248,27 @@ class ChemKin:
 			k = np.array(k)
 		except TypeError as err:
 			raise TypeError("x and v should be either int or float vectors")
-		if k.any() < 0:
-			raise ValueError("reaction constant can't be negative")
-
-		ws = k * np.prod(x ** v1, axis=1)
-		rrs = np.sum((v2 - v1) * np.array([ws]).T, axis=0)
 		
+			if k.any() < 0:
+				raise ValueError("reaction constant can't be negative")
+
+			ws = k * np.prod(x ** v1, axis=1)
+			rrs = np.sum((v2 - v1) * np.array([ws]).T, axis=0)
+
 		return rrs
+
 
 class Reaction:
 
 	def __init__(self, parser):
 		self.species = parser.get_species()
 		self.reactions = parser.parse_reactions()
+		self.V1, self.V2  = self.reaction_components()
+		self.p0 = 1.0e+05 # Pa
+		self.R = 8.3144598 # J / mol / K
+		self.gamma = np.sum(V2 - V1, axis=1)
+		# TODO
+		self.nasa_coeff_db = None
 
 	def __repr__(self):
 		reaction_str = ''
@@ -264,6 +279,81 @@ class Reaction:
 
 	def __len__(self):
 		return len(self.reactions)
+
+	'''
+		functions for computing reversible reaction
+	'''
+	def Cp_over_R(self, T):
+
+        # WARNING:  This line will depend on your own data structures!
+        # Be careful to get the correct coefficients for the appropriate 
+        # temperature range.  That is, for T <= Tmid get the low temperature 
+        # range coeffs and for T > Tmid get the high temperature range coeffs.
+        
+        # a = self.rxnset.nasa7_coeffs
+        
+        #Tmax = 3500.000
+        #Tmin = 200.000 #assing from database
+        
+        #if  T < Tmin:
+        #   a = get_coeffs(LOW)
+        #elif T > Tmx:
+        #   a = get_coeffs(HIGH)
+
+        Cp_R = (a.loc[:,0] + a.loc[:,1] * T + a.loc[:,2] * T**2.0 
+                + a.loc[:,3] * T**3.0 + a.loc[:,4] * T**4.0)
+
+    	return Cp_R
+
+    def H_over_RT(self, T):
+
+        # WARNING:  This line will depend on your own data structures!
+        # Be careful to get the correct coefficients for the appropriate 
+        # temperature range.  That is, for T <= Tmid get the low temperature 
+        # range coeffs and for T > Tmid get the high temperature range coeffs.
+        
+        #a = self.rxnset.nasa7_coeffs
+
+        H_RT = (a.loc[:,0] + a.loc[:,1] * T / 2.0 + a.loc[:,2] * T**2.0 / 3.0 
+                + a.loc[:,3] * T**3.0 / 4.0 + a.loc[:,4] * T**4.0 / 5.0 
+                + a.loc[:,5] / T)
+
+        return H_RT
+
+  	def S_over_R(self, T):
+	    # WARNING:  This line will depend on your own data structures!
+	    # Be careful to get the correct coefficients for the appropriate 
+	    # temperature range.  That is, for T <= Tmid get the low temperature 
+	    # range coeffs and for T > Tmid get the high temperature range coeffs.
+	    
+	    #a = self.rxnset.nasa7_coeffs
+
+    	S_R = (a.loc[:,0] * np.log(T) + a.loc[:,1] * T + a.loc[:,2] * T**2.0 / 2.0 
+           + a.loc[:,3] * T**3.0 / 3.0 + a.loc[:,4] * T**4.0 / 4.0 + a.loc[:,6])
+
+    	return S_R
+
+	def backward_coeffs(self, kf, T):
+
+	    # Change in enthalpy and entropy for each reaction
+	    ### MAKE SURE THE ORDERS OF V1,2 AND S,H are the same
+	    delta_H_over_RT = np.dot(self.V2 - self.V1, self.H_over_RT(T))
+	    delta_S_over_R = np.dot(self.V2 - self.V1, self.S_over_R(T))
+
+	    # Negative of change in Gibbs free energy for each reaction 
+	    delta_G_over_RT = delta_S_over_R - delta_H_over_RT
+
+	    # Prefactor in Ke
+	    fact = self.p0 / self.R / T
+
+	    # Ke
+	    ke = fact**self.gamma * np.exp(delta_G_over_RT)
+
+	    return kf / ke
+
+	'''
+		Functions 
+	'''
 
 	def reaction_components(self):
 		""" Return the V1 and V2 of the reactions
@@ -297,7 +387,9 @@ class Reaction:
 		========
 		coeffs: a list, where coeffs[i] is the reaction coefficient for the i_th reaction
 		"""
+		
 		coeffs = []
+		reversibles = []
 		for _, reaction in self.reactions.items():
 			
 			if 'K' in reaction['coeff_params']:
@@ -311,8 +403,21 @@ class Reaction:
 				coeffs.append( ChemKin.reaction_coeff.arr(T, A=reaction['coeff_params']['A'], \
 					E=reaction['coeff_params']['E'] ) )
 
-		return coeffs
-			
+			reversibles += [ reaction['reversible'] ]
+
+		if np.sum(reversible) == 0:
+			return coeffs
+		else:
+			b_coeffs = self.backward_coeffs(coeffs, T)
+			mixed_coeffs = []
+			for i, reversible in enumerate(reversibles):
+				if reversible:
+					mixed_coeffs += [ b_coeffs[i] ]
+				else:
+					mixed_coeffs += [ coeffs[i] ]
+
+		return mixed_coeffs
+
 
 if __name__ == "__main__":
 
@@ -347,8 +452,10 @@ if __name__ == "__main__":
 	"""
 	T = 750
 	X = [2, 1, 0.5, 1, 1]
-	reactions = Reaction(ReactionParser('../test/xml/xml_homework.xml'))
-	V1, V2 = reactions.reaction_components()
-	k = reactions.reaction_coeff_params(T)
-	print (reactions.species )
-	print ( ChemKin.reaction_rate(V1, V2, X, k) )
+	# reactions = Reaction(ReactionParser('../test/xml/xml_homework.xml'))
+	# V1, V2 = reactions.reaction_components()
+	# k = reactions.reaction_coeff_params(T)
+	# print (reactions.species )
+	# print ( ChemKin.reaction_rate(V1, V2, X, k) )
+	reactions = Reaction(ReactionParser('rxns_reversible.xml'))
+	print (reactions)
