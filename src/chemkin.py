@@ -1,5 +1,5 @@
 import numpy as np
-from nasa import getNASAcoeff
+from nasa import getNASACoeff
 import xml.etree.ElementTree as ET
 
 class ReactionParser:
