@@ -7,7 +7,7 @@ import numpy as np
 
 # testing for correct values
 
-reactions = chemkin.Reaction(chemkin.ReactionParser('../test/xml/xml_homework.xml'), T=3500)
+reactions = chemkin.Reaction(chemkin.ReactionParser('test/xml/xml_homework.xml'), T=3500)
 
 
 def test_H_over_RT_result():
