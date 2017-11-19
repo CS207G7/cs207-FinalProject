@@ -252,11 +252,11 @@ class ChemKin:
 		if type(k) == tuple:
 			# contains backward
 			coeffs, bw_coeffs, reversibles = k
-			if coeffs.any() < 0 or bw_coeffs.any() < 0 :
+			if np.any(coeffs < 0) or np.any(bw_coeffs < 0):
 				raise ValueError("reaction constant can't be negative")
 		else:
 			coeffs = np.array(k)
-			if coeffs.any() < 0:
+			if np.any(coeffs < 0):
 				raise ValueError("reaction constant can't be negative")
 
 		fw_ws = coeffs * np.prod(x ** v1, axis=1)
@@ -264,7 +264,7 @@ class ChemKin:
 
 		if type(k) == tuple:
 
-			if np.array(reversibles).all() == 1:
+			if np.all(np.array(reversibles) == 1):
 				bw_ws = (bw_coeffs * np.prod(x ** v2, axis=1)).flatten()
 				bw_rrs = fw_rrs - (np.sum((v2 - v1) * np.array([bw_ws]).T, axis=0))
 				return bw_rrs
@@ -272,10 +272,10 @@ class ChemKin:
 				# mixed
 				ws = []
 				for i, reversible in enumerate(reversibles):
-					if reversibles:
-						ws += [ bw_coeffs[i] * np.prod(x * v2[i]) ]
+					if reversible:
+						ws += [ bw_coeffs.flatten()[i] * np.prod(x ** v2[i]) ]
 					else:
-						ws += [ coeffs[i] * np.prod(x * v1[i]) ]
+						ws += [ coeffs[i] * np.prod(x ** v1[i]) ]
 				return np.sum((v2 - v1) * np.array([ws]).T, axis=0)
 		else:
 			return fw_rrs
@@ -476,16 +476,16 @@ if __name__ == "__main__":
 	The last thing we need user to provide is the X: concentration of species. With V1, V2, and k computed,
 	user can easily obtian reaction rate for each speicies.
 	"""
-	T = 750
-	X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
+	# T = 750
+	# X = [2, 1, 0.5, 1, 1 ]# ,0.5, 0.5, 0.5]
 	# reactions = Reaction(ReactionParser('../test/xml/xml_homework.xml'), T)
-	reactions = Reaction(ReactionParser('../data/rxns_reversible.xml'), T)
-	# print (reactions)
-	V1, V2 = reactions.reaction_components()
-	k = reactions.reaction_coeff_params()
-	# print (reactions.species )
-	rrs = ChemKin.reaction_rate(V1, V2, X, k)
-	print ( rrs )
+	# # reactions = Reaction(ReactionParser('../data/rxns_reversible.xml'), T)
+	# # print (reactions)
 	# V1, V2 = reactions.reaction_components()
 	# k = reactions.reaction_coeff_params()
-	# print ( ChemKin.reaction_rate(V1, V2, X, k) )
+	# # print (reactions.species )
+	# rrs = ChemKin.reaction_rate(V1, V2, X, k)
+	# print ( rrs )
+	# # V1, V2 = reactions.reaction_components()
+	# # k = reactions.reaction_coeff_params()
+	# # print ( ChemKin.reaction_rate(V1, V2, X, k) )
