@@ -311,37 +311,27 @@ class Reaction:
 	'''
 
 	def get_nasa_coeffs(self):
+		""" Return the NASA polynomial coeffs for each species
+		INPUTS
+		=======
+		self
+
+		RETURNS
+		========
+		nasa_coeffs: a list, where nasa_coeffs[i] is the NASA coeffs for the ith species"""
 		self.nasa_coeffs = np.zeros((len(self.species), 7))
 		for i, specie in enumerate(self.species):
 			self.nasa_coeffs[i] = getNASACoeff(specie, self.T)
-	# def Cp_over_R(self, T):
-
-	#     # WARNING:  This line will depend on your own data structures!
-	#     # Be careful to get the correct coefficients for the appropriate 
-	#     # temperature range.  That is, for T <= Tmid get the low temperature 
-	#     # range coeffs and for T > Tmid get the high temperature range coeffs.
-		
-	#     # a = self.rxnset.nasa7_coeffs
-		
-	#     #Tmax = 3500.000
-	#     #Tmin = 200.000 #assing from database
-		
-	#     #if  T < Tmin:
-	#     #   a = get_coeffs(LOW)
-	#     #elif T > Tmx:
-	#     #   a = get_coeffs(HIGH)
-
-	#     Cp_R = (a[:,0] + a[:,1] * T + a[:,2] * T**2.0 
-	#             + a[:,3] * T**3.0 + a[:,4] * T**4.0)
-
-	#     return Cp_R
 
 	def H_over_RT(self):
+		""" Return H over RT, Enthalpy
+		INPUTS
+		=======
+		self
 
-		# WARNING:  This line will depend on your own data structures!
-		# Be careful to get the correct coefficients for the appropriate 
-		# temperature range.  That is, for T <= Tmid get the low temperature 
-		# range coeffs and for T > Tmid get the high temperature range coeffs.
+		RETURNS
+		========
+		H_RT: a list, where H_RT[i] is the enthalpy for the ith species"""
 		a = self.nasa_coeffs
 		H_RT = (a[:,0] + a[:,1] * self.T / 2.0 + a[:,2] * self.T**2.0 / 3.0 
 				+ a[:,3] * self.T**3.0 / 4.0 + a[:,4] * self.T**4.0 / 5.0 
@@ -350,18 +340,29 @@ class Reaction:
 		return H_RT
 
 	def S_over_R(self):
-		# WARNING:  This line will depend on your own data structures!
-		# Be careful to get the correct coefficients for the appropriate 
-		# temperature range.  That is, for T <= Tmid get the low temperature 
-		# range coeffs and for T > Tmid get the high temperature range coeffs.
-		
-		#a = self.rxnset.nasa7_coeffs
+		""" Return S over R, Entropy
+		INPUTS
+		=======
+		self
+
+		RETURNS
+		========
+		S_R: a list, where S_R[i] is the entropy for the ith species"""
 		a = self.nasa_coeffs
 		S_R = (a[:,0] * np.log(self.T) + a[:,1] * self.T + a[:,2] * self.T**2.0 / 2.0 
 			+ a[:,3] * self.T**3.0 / 3.0 + a[:,4] * self.T**4.0 / 4.0 + a[:,6])
 		return S_R
 
 	def backward_coeffs(self, kf):
+
+		""" Return backward reation coeffs for each reactions
+		INPUTS
+		=======
+		kf: the forward reaction coeffs
+
+		RETURNS
+		========
+		coeffs: a list, where coeffs[i] is the reaction coeffs for the i_th reaction"""
 
 		# Change in enthalpy and entropy for each reaction
 
