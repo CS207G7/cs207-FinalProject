@@ -5,7 +5,7 @@
 
 ### `chemkin` -- Chemical Kinetics Computational toolkit
 
-This `chemkin` is a collection of algorithms aimed at predicting the time evolution of species concentration, finding the rate of change of a chemical species and calculating the rate of change of a certain specie. For multiple irreversible elementary reactions the rate of change follows the form:
+This `chemkin` is a collection of algorithms aimed at predicting the time evolution of species concentration, finding the rate of change of a chemical species and calculating the rate of change of a certain specie. For multiple elementary reactions the rate of change follows the form:
 
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/reaction_formula.jpg" width="40%">
 
@@ -62,15 +62,32 @@ user can easily obtian reaction rate for each speicies.
 How to Handle Reversible Actions
 ------------
 ### 1. NASA polynomial coeffs
-We first build up a database contains the NASA polynomial coeffs for each species. We can easily obtain the NASA coeffs for any sepcies by
+We first build up a database contains the NASA polynomial coeffs for each species. We can easily obtain the NASA coeffs for any species by
 ```python
-getNASACoeff(specie, T)
+get_nasa_coeffs(specie, T)
 ```
 Based on the T given, the coefficients will be extracted correspondingly.
 ### 2. Enthalpy, H_over_RT
+Then, we calculate the Enthalpy using the coefficients for each specie and the reaction's temperature. To obtain the Enthaply we used the following method
+```python
+H_over_RT(nasa_coeffs, T)
+```
+Based on the T given, the Entalphy will be calculated accordingely.
 ### 3. Entropy, S_over_T
-### 4. Backward Coeffs
+After, we calculate the Entropy using the coefficients for each specie and the reaction's temperature. To obtain the Entropy we used the following method
+```python
+S_over_R(nasa_coeffs, T)
+```
+Based on the T given, the Entropy will be calculated accordingely.
+### 4. Backward Reaction Coefficients
+Then, we calculated the backward reaction coefficients using the following method that requires as inputs `H_over_RT`, `S_over_R`,  `v1`, `v2` 
+```python
+backward_coeffs(H_over_RT, S_over_R, V1, V2, rr)
+```
+Based on the forward reaction rates (`rr`) the backwards reaction coefficients will be calculated.
 ### 5. Reversible Reaction Rate
+For reversible elementary reactions the rate of change follows the form:
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/reversible_reaction_formula.jpg" width="40%">
 
 Future Features
 ------------
