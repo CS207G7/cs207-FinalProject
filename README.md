@@ -67,4 +67,10 @@ We first build up a database contains the NASA polynomial coeffs for each specie
 getNASACoeff(specie, T)
 ```
 Based on the T given, the coefficients will be extracted correspondingly.
-### 1. NASA polynomial coeffs
+### 2. Enthalpy, H_over_RT
+### 3. Entropy, S_over_T
+### 4. Backward Coeffs
+### 5. Reversible Reaction Rate
+
+Future Features
+------------
