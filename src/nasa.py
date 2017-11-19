@@ -1,6 +1,5 @@
 import sqlite3
 
-
 def getNASACoeff(species, temperature):
 	#db = sqlite3.connect("../data/NASA.sqlite")
 	db = sqlite3.connect("../data/NASA.sqlite")
