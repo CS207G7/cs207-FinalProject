@@ -33,9 +33,9 @@ parse the XML and obtain the following reaction details:
 
 ### 2. Wrap parsed raw reactions into Reaction class
 ```python
-reactions = Reaction(parsed, T=750)
+reactions = Reaction(parsed, T)
 ```
-wrap the reactions information into a Reaction Class. The default temperature is 750, you can modify it accordingly.
+wrap the reactions information into a Reaction Class. Temperature T at this step.
 
 ### 3. Obtain reaction components for each reaction
 ```python
