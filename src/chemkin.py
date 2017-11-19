@@ -1,5 +1,5 @@
 import numpy as np
-from src.nasa import getNASACoeff
+from nasa import getNASACoeff
 import xml.etree.ElementTree as ET
 
 class ReactionParser:
@@ -249,7 +249,7 @@ class ChemKin:
 		except TypeError as err:
 			raise TypeError("x and v should be either int or float vectors")
 		
-		if len(k) == 3:
+		if type(k) == tuple:
 			# contains backward
 			coeffs, bw_coeffs, reversibles = k
 			if coeffs.any() < 0 or bw_coeffs.any() < 0 :
@@ -262,16 +262,21 @@ class ChemKin:
 		fw_ws = coeffs * np.prod(x ** v1, axis=1)
 		fw_rrs = np.sum((v2 - v1) * np.array([fw_ws]).T, axis=0)
 
-		if len(k) == 3:
-			bw_ws = (bw_coeffs * np.prod(x ** v2, axis=1)).flatten()
-			bw_rrs = fw_rrs - (np.sum((v2 - v1) * np.array([bw_ws]).T, axis=0))
-			rrs = []
-			for i, reversible in enumerate(reversibles):
-				if reversible:
-					rrs += [ bw_rrs[i].tolist() ]
-				else:
-					rrs += [ fw_rrs[i].tolist() ]
-			return rrs
+		if type(k) == tuple:
+
+			if np.array(reversibles).all() == 1:
+				bw_ws = (bw_coeffs * np.prod(x ** v2, axis=1)).flatten()
+				bw_rrs = fw_rrs - (np.sum((v2 - v1) * np.array([bw_ws]).T, axis=0))
+				return bw_rrs
+			else:
+				# mixed
+				ws = []
+				for i, reversible in enumerate(reversibles):
+					if reversibles:
+						ws += [ bw_coeffs[i] * np.prod(x * v2[i]) ]
+					else:
+						ws += [ coeffs[i] * np.prod(x * v1[i]) ]
+				return np.sum((v2 - v1) * np.array([ws]).T, axis=0)
 		else:
 			return fw_rrs
 
@@ -282,7 +287,7 @@ class Reaction:
 		self.reactions = parser.parse_reactions()
 		self.V1, self.V2  = self.reaction_components()
 		self.p0 = 1.0e+05 # Pa
-		self.R = 8.3144598 # J / mol / K
+		self.R = 8.314 # J / mol / K
 
 		if type(T) is not int and type(T) is not float:
 				raise TypeError("Temperature (in Kelvin scale) should be either int or float")
@@ -471,14 +476,16 @@ if __name__ == "__main__":
 	The last thing we need user to provide is the X: concentration of species. With V1, V2, and k computed,
 	user can easily obtian reaction rate for each speicies.
 	"""
-	# T = 750
-	# X = [2, 1, 0.5, 1, 1] #,1, 1, 1]
+	T = 750
+	X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
 	# reactions = Reaction(ReactionParser('../test/xml/xml_homework.xml'), T)
-	# V1, V2 = reactions.reaction_components()
-	# k = reactions.reaction_coeff_params()
+	reactions = Reaction(ReactionParser('../data/rxns_reversible.xml'), T)
+	# print (reactions)
+	V1, V2 = reactions.reaction_components()
+	k = reactions.reaction_coeff_params()
 	# print (reactions.species )
-	# rrs = ChemKin.reaction_rate(V1, V2, X, k)
-	# reactions = Reaction(ReactionParser('../data/rxns_reversible.xml'), T)
+	rrs = ChemKin.reaction_rate(V1, V2, X, k)
+	print ( rrs )
 	# V1, V2 = reactions.reaction_components()
 	# k = reactions.reaction_coeff_params()
 	# print ( ChemKin.reaction_rate(V1, V2, X, k) )
