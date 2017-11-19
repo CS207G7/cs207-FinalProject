@@ -68,7 +68,6 @@ def test_XML_reversible():
     diffs = np.array([rrs - ans])
     #print(diffs)
     assert (diffs < 0.0000001).all()
-    #assert (rrs - ans).all() < 0.000000001
 
 
 #test_XML_reader_1()
@@ -77,5 +76,4 @@ def test_XML_reversible():
 #test_XML_homework()
 #test_XML_reader_2_V1()
 #test_XML_reader_2_V2()
-test_XML_reversible()
-
+#test_XML_reversible()
