@@ -263,7 +263,7 @@ class ChemKin:
 		fw_rrs = np.sum((v2 - v1) * np.array([fw_ws]).T, axis=0)
 
 		if len(k) == 3:
-			bw_ws = bw_coeffs * np.prod(x ** v2, axis=1)
+			bw_ws = (bw_coeffs * np.prod(x ** v2, axis=1)).flatten()
 			bw_rrs = fw_rrs - (np.sum((v2 - v1) * np.array([bw_ws]).T, axis=0))
 			rrs = []
 			for i, reversible in enumerate(reversibles):
@@ -477,7 +477,7 @@ if __name__ == "__main__":
 	# V1, V2 = reactions.reaction_components()
 	# k = reactions.reaction_coeff_params()
 	# print (reactions.species )
-	# print ( ChemKin.reaction_rate(V1, V2, X, k) )
+	# rrs = ChemKin.reaction_rate(V1, V2, X, k)
 	# reactions = Reaction(ReactionParser('../data/rxns_reversible.xml'), T)
 	# V1, V2 = reactions.reaction_components()
 	# k = reactions.reaction_coeff_params()
