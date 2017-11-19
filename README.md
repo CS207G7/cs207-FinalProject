@@ -62,4 +62,9 @@ user can easily obtian reaction rate for each speicies.
 How to Handle Reversible Actions
 ------------
 ### 1. NASA polynomial coeffs
-We first build up a database contains the NASA polynomial coeffs for each species. We have a 
+We first build up a database contains the NASA polynomial coeffs for each species. We can easily obtain the NASA coeffs for any sepcies by
+```python
+getNASACoeff(specie, T)
+```
+Based on the T given, the coefficients will be extracted correspondingly.
+### 1. NASA polynomial coeffs
