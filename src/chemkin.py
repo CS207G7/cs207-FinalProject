@@ -277,7 +277,7 @@ class ChemKin:
 
 class Reaction:
 
-	def __init__(self, parser, T=750):
+	def __init__(self, parser, T):
 		self.species = parser.get_species()
 		self.reactions = parser.parse_reactions()
 		self.V1, self.V2  = self.reaction_components()

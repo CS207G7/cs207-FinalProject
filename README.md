@@ -18,9 +18,9 @@ Installation
 Download the package, and `from chemkin import *`, and you can access any function you wish.
 
 
-Examples
+Main Utilities
 ------------
-#### How to use
+### 1. Parse raw reactions from XML
 
 ```python
 parsed = ReactionParser('path_to_reaction_xml')
@@ -31,26 +31,35 @@ parse the XML and obtain the following reaction details:
 2. basic information, such as reaction id, reaction type, reaction equations, and etc.
 3. `v1` and `v2` for each reaction
 
+### 2. Wrap parsed raw reactions into Reaction class
 ```python
-reactions = Reaction(parsed)
+reactions = Reaction(parsed, T=750)
 ```
-wrap the reactions information into a Reaction Class
+wrap the reactions information into a Reaction Class. The default temperature is 750, you can modify it accordingly.
 
+### 3. Obtain reaction components for each reaction
 ```python
 V1, V2 = reactions.reaction_components()
 ```
 since there could be multiple reactions inside a given reaction set, 
 we stack each `v1` into `V1`, and each `v2` to `V2`
 
+### 4. Obtain reaction coeffs for each reaction
 ```python
-k = reactions.reaction_coeff_params(T)
+k = reactions.reaction_coeff_params()
 ```
 since the coefficient type is implicity given in the XML file. If `Arrhenius` is found, we check if `b`
 is given to decide using modified or regular arr; if `Constant` is found, we use constant coeff. 
-we only need user to provide T of the current reaction set, and return the list of reaction coeffs.
+we only need user to provide T of the current reaction set, and return the list of reaction coeffs. Notice that this function can handle both reversible and non-reversible reactions. If your reaction set contains both reversible and non-reversible reactions, no worries, the function can also handle them. We will show how we handle reversible actions later.
 
+### 5. Obtain reaction rates for each reaction
 ```python
 rr = ChemKin.reaction_rate(V1, V2, X, k)
 ```
 The last thing we need user to provide is the `X`: concentration of species. With `V1`, `V2`, and `k` computed,
 user can easily obtian reaction rate for each speicies.
+
+How to Handle Reversible Actions
+------------
+### 1. NASA polynomial coeffs
+We first build up a database contains the NASA polynomial coeffs for each species. We have a 
