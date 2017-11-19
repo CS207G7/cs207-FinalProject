@@ -64,30 +64,34 @@ How to Handle Reversible Actions
 ### 1. NASA polynomial coeffs
 We first build up a database contains the NASA polynomial coeffs for each species. We can easily obtain the NASA coeffs for any species by
 ```python
-get_nasa_coeffs(specie, T)
+get_nasa_coeffs()
 ```
 Based on the T given, the coefficients will be extracted correspondingly.
 ### 2. Enthalpy, H_over_RT
 Then, we calculate the Enthalpy using the coefficients for each specie and the reaction's temperature. To obtain the Enthaply we used the following method
 ```python
-H_over_RT(nasa_coeffs, T)
+H_over_RT()
 ```
-Based on the T given, the Entalphy will be calculated accordingely.
+Based on the T given, the Entalphy will be calculated following the form:
+--add image
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/H_over_RT_formula.JPG" width="40%">
 ### 3. Entropy, S_over_T
 After, we calculate the Entropy using the coefficients for each specie and the reaction's temperature. To obtain the Entropy we used the following method
 ```python
-S_over_R(nasa_coeffs, T)
+S_over_R()
 ```
-Based on the T given, the Entropy will be calculated accordingely.
+Based on the T given, the Entropy will be calculated following the form:
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/S_over_R_formula.JPG" width="40%">
 ### 4. Backward Reaction Coefficients
-Then, we calculated the backward reaction coefficients using the following method that requires as inputs `H_over_RT`, `S_over_R`,  `v1`, `v2` 
+Then, we calculated the backward reaction coefficients using the following method:
 ```python
-backward_coeffs(H_over_RT, S_over_R, V1, V2, rr)
+backward_coeffs()
 ```
-Based on the forward reaction rates (`rr`) the backwards reaction coefficients will be calculated.
+Based on the forward reaction rates, the backwards reaction coefficients will be calculated following the form:
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/backward_coeffs_formula.JPG" width="40%">
 ### 5. Reversible Reaction Rate
 For reversible elementary reactions the rate of change follows the form:
-<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/reversible_reaction_formula.jpg" width="40%">
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/reversible_reaction_formula.JPG" width="40%">
 
 Future Features
 ------------
