@@ -73,7 +73,6 @@ Then, we calculate the Enthalpy using the coefficients for each specie and the r
 H_over_RT()
 ```
 Based on the T given, the Entalphy will be calculated following the form:
---add image
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/H_over_RT_formula.JPG" width="40%">
 ### 3. Entropy, S_over_T
 After, we calculate the Entropy using the coefficients for each specie and the reaction's temperature. To obtain the Entropy we used the following method
