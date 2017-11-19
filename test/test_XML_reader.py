@@ -29,7 +29,7 @@ def test_XML_bad_products():
 def test_XML_reader_2_V1():
     r_reader = chemkin.ReactionParser('test/xml/xml_good2.xml')# chemkin.ReactionParser('test/xml/xml_good2.xml')
     reactions = r_reader.parse_reactions()
-    chem = chemkin.Reaction(r_reader)
+    chem = chemkin.Reaction(r_reader, 750)
     V1, V2 = chem.reaction_components()
     print(repr(chem))
     print(V1)
@@ -38,7 +38,7 @@ def test_XML_reader_2_V1():
 def test_XML_reader_2_V2():
    r_reader = chemkin.ReactionParser('test/xml/xml_good2.xml')
    reactions = r_reader.parse_reactions()
-   chem = chemkin.Reaction(r_reader)
+   chem = chemkin.Reaction(r_reader, 750)
    V1, V2 = chem.reaction_components()
    assert all(V2 == [[0], [1], [1], [0], [0]]), "XML Reader loading incorrect v1 in file xml_good2.xml"
 
@@ -47,11 +47,11 @@ def test_XML_homework():
     r_reader = chemkin.ReactionParser('test/xml/xml_homework.xml')
     reactions = r_reader.parse_reactions()
 
-    chem = chemkin.Reaction(r_reader)
     T = 750
+    chem = chemkin.Reaction(r_reader, T)
     X = [2, 1, 0.5, 1, 1]
     V1, V2 = chem.reaction_components()
-    k = chem.reaction_coeff_params(T)
+    k = chem.reaction_coeff_params()
     rrs = chemkin.ChemKin.reaction_rate(V1, V2, X, k)
     ans = np.array([-3607077.87280406, -5613545.18362079, 9220623.05642485, 2006467.31081673,-2006467.31081673])
     assert (rrs - ans).all() < 0.000000001
