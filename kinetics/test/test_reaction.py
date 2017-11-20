@@ -1,10 +1,10 @@
 import sys
 import numpy as np
 #sys.path.append('../src')
-sys.path.append('src')
+#sys.path.append('src')
 #sys.path.append('test')
 #sys.path.append('test/xml')
-import chemkin
+from kinetics import chemkin
 
 def test_reaction_result():
     V1, V2 = np.array([[1,2,3],[2,1,2]]).T, np.array([[1,1,2],[5,1,1]]).T

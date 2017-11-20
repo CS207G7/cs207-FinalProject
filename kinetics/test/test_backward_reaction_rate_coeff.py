@@ -1,13 +1,13 @@
 #import sys
 # sys.path.append('src')
-from src import chemkin
+from kinetics import chemkin
 import numpy as np
 
 #Function: H_over_RT
 
 # testing for correct values
 
-reactions = chemkin.Reaction(chemkin.ReactionParser('test/xml/xml_homework.xml'), T=3500)
+reactions = chemkin.Reaction(chemkin.ReactionParser('kinetics/test/xml/xml_homework.xml'), T=3500)
 
 
 def test_H_over_RT_result():

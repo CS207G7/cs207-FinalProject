@@ -1,8 +1,8 @@
 
-import sys
-sys.path.append('src')
+#import sys
+#sys.path.append('src')
 
-import chemkin
+from kinetics import chemkin
 
 #Function: Constant 
 ## testing for correct values 

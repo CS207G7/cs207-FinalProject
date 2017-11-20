@@ -1,12 +1,12 @@
-import sys
-sys.path.append('src')
+#import sys
+#sys.path.append('src')
 
-import chemkin
+from kinetics import chemkin
 
 #Function: reaction_coeff_params
 ## testing for type errors 
 
-parsed = chemkin.ReactionParser('test/xml/xml_homework.xml')
+parsed = chemkin.ReactionParser('kinetics/test/xml/xml_homework.xml')
 
 def test_reaction_coeff_params_T_text():
     try:

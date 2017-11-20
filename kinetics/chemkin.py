@@ -1,5 +1,5 @@
 import numpy as np
-from src.nasa import getNASACoeff
+from kinetics.nasa import getNASACoeff
 import xml.etree.ElementTree as ET
 
 class ReactionParser:
