@@ -15,7 +15,7 @@ This `chemkin` is a collection of algorithms aimed at predicting the time evolut
 Installation
 ------------
 
-Install the package `pip3 install chemkin`, and `from kinetics import chemkin`, and you can access any function you wish.
+Install the package `pip3 install cs207_G7`, and `from kinetics import chemkin`, and you can access any function you wish.
 
 
 Main Utilities
