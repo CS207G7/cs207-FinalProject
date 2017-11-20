@@ -92,6 +92,24 @@ Based on the forward reaction rates, the backwards reaction coefficients will be
 For reversible elementary reactions the rate of change follows the form:
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/reversible_reaction_formula.JPG" width="40%">
 
+Example
+------------
+The following code sinppet shows an entire example:
+
+```python
+from kinetics.chemkin import Reaction
+from kinetics.chemkin import ReactionParser
+from kinetics.chemkin import ChemKin
+
+T = 750
+X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
+reactions = Reaction(ReactionParser('rxns_reversible.xml'), T)
+V1, V2 = reactions.reaction_components()
+k = reactions.reaction_coeff_params()
+rrs = ChemKin.reaction_rate(V1, V2, X, k)
+print ( rrs )
+```
+
 Future Features
 ------------
 ### 1.Motivation and Feature Description

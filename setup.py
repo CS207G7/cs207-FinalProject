@@ -9,6 +9,12 @@ from setuptools import setup, find_packages
 # To use a consistent encoding
 from codecs import open
 from os import path
+# import unittest
+
+# def get_test_suite():
+#     test_loader = unittest.TestLoader()
+#     test_suite = test_loader.discover('test', pattern='kinetics/test/test_*.py')
+#     return test_suite
 
 here = path.abspath(path.dirname(__file__))
 
@@ -37,6 +43,8 @@ setup(
     # Choose your license
     license='MIT',
 
+    # test_suite='test',
+
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         # How mature is this project? Common values are
@@ -63,7 +71,6 @@ setup(
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
     packages=['kinetics'],
-
     # Alternatively, if you want to distribute just a my_module.py, uncomment
     # this:
     #   py_modules=["my_module"],
