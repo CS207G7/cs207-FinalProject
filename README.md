@@ -158,9 +158,9 @@ is enabled by inputting temperature of the reactions.This method returns the lis
 **get_by_date()**
 The method
 ```python
-get_mass()
+get_by_date()
 ```
-is enabled by inputting the mass for each specie in the reaction. This method returns the list of reactions computed with the same mass.
+is enabled by inputting the date on which the reaction has been computed. This method returns the list of reactions computed in the same date.
 
 
 ### 5.User's Experience
