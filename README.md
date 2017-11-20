@@ -96,17 +96,17 @@ Future Features
 ------------
 ### 1.Motivation and Feature Description
 
-Our team of software developers expect to deliver a feature able to keep tract of all the elementary reactions computed by a user.
+Our team of software developers expect to deliver a feature able to keep track of all the elementary reactions computed by a user.
 
-The feature will efficientely browse into a list of reactions that have been computed and it will sort them by elements of interest such as by reversible or non-reversible reactions, by specie, by temperature, by concentration, by reactants and by products.
+The feature will efficiently browse into a list of reactions that have been computed and it will sort them by elements of interest such as species, temperature, date, and reversible or non-reversible reactions.
 
-We think that the feature will be really useful for scientists interested in building their own database of elementary reactions. The devised feature will allow the user to explore reactions without the need of computing again. Not bad, right?! Beside saving time for the computation, the user might grow its own database that could be eventually shared with other users. 
+We think that the feature will be really useful for scientists interested in building their own database of elementary reactions. The devised feature will allow the user to explore reactions without the need for computing again. Beside saving time for the computation, the user might grow its own database that could be eventually shared with other users. 
 
 Our feature will ultimately allow the user to find quickly the information related to the reactions already computed.
 
 ### 2.Feature and Code Base (and Package)
 
-The feature is going to fit into our code base because it will store each reaction computed by the base code. Our feature will store them in a database. The database will be accessible from the user. The module is going to use the methods enfolded in the module to find the reactions requested by the user.
+The feature is going to fit into our code base because it will store each reaction computed by chemkin. Our feature will store them in a database either adjacent to or combined with the NASA polynomials. Updates to our code will give the user methods enfolded in the module to find the reactions requested by the user.
 
 ### 3.Module
 
@@ -114,57 +114,44 @@ Our team is going to build a module  `history.py`. It will handle the results of
 
 ### 4.Methods
 
-A preliminary list of methods for selecting the reactions are listed below:
+A preliminary list of methods for selecting the reactions are listed below (parameters will be filled in at a later date):
 
 **get_type()**
 The method
 ```python
 get_type()
 ```
-is unabled by inputting the type(i.e. reversible or not reversible) of the reaction. This method returns the list of reactions of similar type.
+is enabled by inputting the type(i.e. reversible or not reversible) of the reaction. This method returns the list of reactions of similar type.
 
 **get_specie()**
 The method
 ```python
 get_specie()
 ```
-is unabled by inputting species of the reaction (e.g. H, H2, O2, etc.). This method returns the list of reactions computed with the same species.
+is enabled by inputting species of the reaction (e.g. H, H2, O2, etc.). This method returns the list of reactions computed with the same species.
 
 **get_temperature()**
 The method
 ```python
 get_temperature()
 ```
-is unabled by inputting temperature of the reactions.This method returns the list of reactions computed with the same temperature.
+is enabled by inputting temperature of the reactions.This method returns the list of reactions computed with the same temperature.
 
-**get_mass()**
+**get_by_date()**
 The method
 ```python
 get_mass()
 ```
-is unabled by inputting the mass for each specie in the reaction. This method returns the list of reactions computed with the same mass.
+is enabled by inputting the mass for each specie in the reaction. This method returns the list of reactions computed with the same mass.
 
-**get_mass()**
-The method
-```python
-get_products()
-```
-is unabled by inputting the species in the products. This method returns the list of reactions computed with same reactants.
-
-**get_reactants()**
-The method
-```python
-get_reactants()
-```
-is unabled by inputting the species reacting. This method returns the list of reactions computed with same reactants.
 
 ### 5.User's Experience
 
-The user will be able to query any information contained in the reactions that have been computed. For instance, the user will be able to find all the reactions sort by elements of interest (e.g. type, species in the reactions, tempeature of the reactions, etc).
+The user will be able to query any information contained in the reactions that have been computed. For instance, the user will be able to find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc).
 
 ### 6.External Dependencies
 
-The only external pacakage that our feature is going to need is `sqlite3`.
+No additional external dependencies are anticipated to be required beyond what is used by our current version. Our new features will depend primarily on `sqlite3`.
 
 ''''
 Coming Soon

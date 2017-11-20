@@ -1,10 +1,11 @@
 import sqlite3
+import os
 
 def getNASACoeff(species, temperature):
+	#db = sqlite3.connect(dbaddress)
+	#print(os.path.dirname(__file__))
 	#db = sqlite3.connect("../data/NASA.sqlite")
-
-	db = sqlite3.connect("kinetics/data/NASA.sqlite")
-	#db = sqlite3.connect("../data/NASA.sqlite")
+	db = sqlite3.connect(os.path.dirname(__file__) + "/data/NASA.sqlite")
 	cursor = db.cursor()
 	#Check for valid coefficients within temperature range in LOW table
 	lowTemp = '''SELECT * FROM LOW WHERE SPECIES_NAME = "{}" \
