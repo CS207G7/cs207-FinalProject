@@ -15,7 +15,7 @@ This `chemkin` is a collection of algorithms aimed at predicting the time evolut
 Installation
 ------------
 
-Download the package, and `from chemkin import *`, and you can access any function you wish.
+Install the package `pip3 install chemkin`, and `from kinetics import chemkin`, and you can access any function you wish.
 
 
 Main Utilities
@@ -23,7 +23,7 @@ Main Utilities
 ### 1. Parse raw reactions from XML
 
 ```python
-parsed = ReactionParser('path_to_reaction_xml')
+parsed = chemkin.ReactionParser('path_to_reaction_xml')
 ```
 parse the XML and obtain the following reaction details:
 
@@ -33,7 +33,7 @@ parse the XML and obtain the following reaction details:
 
 ### 2. Wrap parsed raw reactions into Reaction class
 ```python
-reactions = Reaction(parsed, T)
+reactions = chemkin.Reaction(parsed, T)
 ```
 wrap the reactions information into a Reaction Class. Temperature T at this step.
 
@@ -54,7 +54,7 @@ we only need user to provide T of the current reaction set, and return the list 
 
 ### 5. Obtain reaction rates for each reaction
 ```python
-rr = ChemKin.reaction_rate(V1, V2, X, k)
+rr = chemkin.ChemKin.reaction_rate(V1, V2, X, k)
 ```
 The last thing we need user to provide is the `X`: concentration of species. With `V1`, `V2`, and `k` computed,
 user can easily obtian reaction rate for each speicies.
