@@ -14,10 +14,8 @@ This `chemkin` is a collection of algorithms aimed at predicting the time evolut
 
 Installation
 ------------
-
 1. Install the package `pip3 install chemkin`, and `from kinetics import chemkin`, and you can access any function you wish. Notice that for this installation method, to run the test suite, you need to navigate to the root foler of this package.
 2. Clone the repo, and run `python3 setup.py install`, to run the test suite, run `python3 setup.py test`. 
-
 
 Main Utilities
 ------------
@@ -159,9 +157,9 @@ is enabled by inputting temperature of the reactions.This method returns the lis
 **get_by_date()**
 The method
 ```python
-get_mass()
+get_by_date()
 ```
-is enabled by inputting the mass for each specie in the reaction. This method returns the list of reactions computed with the same mass.
+is enabled by inputting the date on which the reaction has been computed. This method returns the list of reactions computed in the same date.
 
 
 ### 5.User's Experience
