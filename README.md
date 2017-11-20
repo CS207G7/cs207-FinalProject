@@ -14,7 +14,7 @@ This `chemkin` is a collection of algorithms aimed at predicting the time evolut
 
 Installation
 ------------
-1. Install the package `pip3 install chemkin`, and `from kinetics import chemkin`, and you can access any function you wish. Notice that for this installation method, to run the test suite, you need to navigate to the root foler of this package.
+1. Install the package `pip3 install cs207_g7`, and `from kinetics import chemkin`, and you can access any function you wish. Notice that for this installation method, to run the test suite, you need to navigate to the root foler of this package.
 2. Clone the repo, and run `python3 setup.py install`, to run the test suite, run `python3 setup.py test`. 
 
 Main Utilities
