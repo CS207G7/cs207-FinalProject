@@ -477,7 +477,7 @@ if __name__ == "__main__":
 	user can easily obtian reaction rate for each speicies.
 	"""
 	# T = 750
-	# X = [2, 1, 0.5, 1, 1 ]# ,0.5, 0.5, 0.5]
+	# X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
 	# reactions = Reaction(ReactionParser('../test/xml/xml_homework.xml'), T)
 	# # reactions = Reaction(ReactionParser('../data/rxns_reversible.xml'), T)
 	# # print (reactions)

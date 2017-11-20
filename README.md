@@ -15,7 +15,8 @@ This `chemkin` is a collection of algorithms aimed at predicting the time evolut
 Installation
 ------------
 
-Install the package `pip3 install chemkin`, and `from kinetics import chemkin`, and you can access any function you wish.
+1. Install the package `pip3 install chemkin`, and `from kinetics import chemkin`, and you can access any function you wish. Notice that for this installation method, to run the test suite, you need to navigate to the root foler of this package.
+2. Clone the repo, and run `python3 setup.py install`, to run the test suite, run `python3 setup.py test`. 
 
 
 Main Utilities
@@ -92,9 +93,9 @@ Based on the forward reaction rates, the backwards reaction coefficients will be
 For reversible elementary reactions the rate of change follows the form:
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/reversible_reaction_formula.JPG" width="40%">
 
-Example
+A Complete Example
 ------------
-The following code sinppet shows an entire example:
+The following code sinppet shows an entire example that computes the reaction rate:
 
 ```python
 from kinetics.chemkin import Reaction
@@ -103,7 +104,7 @@ from kinetics.chemkin import ChemKin
 
 T = 750
 X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
-reactions = Reaction(ReactionParser('rxns_reversible.xml'), T)
+reactions = Reaction(ReactionParser('your_xml'), T)
 V1, V2 = reactions.reaction_components()
 k = reactions.reaction_coeff_params()
 rrs = ChemKin.reaction_rate(V1, V2, X, k)
