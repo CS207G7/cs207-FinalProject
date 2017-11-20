@@ -1,6 +1,6 @@
 #import sys
-import unittest
 #sys.path.append('src')
+import unittest
 from kinetics import nasa
 
 class test_NASA_Coeff(unittest.TestCase):
