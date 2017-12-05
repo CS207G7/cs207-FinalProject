@@ -1,6 +1,8 @@
 import numpy as np
 from kinetics.nasa import getNASACoeff
 import xml.etree.ElementTree as ET
+from history import History as his
+
 
 class ReactionParser:
 
@@ -445,6 +447,20 @@ class Reaction:
 		else:
 			return np.array(coeffs), self.backward_coeffs(coeffs), reversibles
 
+def compute(path, T, X):
+
+	try:
+		reactions = Reaction(ReactionParser(path), T)
+		V1, V2 = reactions.reaction_components()
+		k = reactions.reaction_coeff_params()
+		rr = ChemKin.reaction_rate(V1, V2, X, k)
+	except:
+		raise Exception('Something went wrong while calculating the reaction rate')
+
+	filename = path.split('/')[-1]
+	his(filename, reactions, T, X, rr).write()
+	return rr
+
 if __name__ == "__main__":
 
 	"""
@@ -476,9 +492,16 @@ if __name__ == "__main__":
 	The last thing we need user to provide is the X: concentration of species. With V1, V2, and k computed,
 	user can easily obtian reaction rate for each speicies.
 	"""
-	# T = 750
-	# X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
-	# reactions = Reaction(ReactionParser('../test/xml/xml_homework.xml'), T)
+
+	T = 750
+	X1 = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
+	X2 = [2, 1, 0.5, 1, 1]
+	
+	compute('test/xml/xml_homework.xml', T, X2)
+	compute('test/xml/rxns_reversible.xml', 2000, X1)
+	compute('test/xml/xml_reversible_and_irreversible.xml', 1500, X2)
+	# reactions = Reaction(ReactionParser('test/xml/xml_homework.xml'), T)
+	# print (reactions)
 	# # reactions = Reaction(ReactionParser('../data/rxns_reversible.xml'), T)
 	# # print (reactions)
 	# V1, V2 = reactions.reaction_components()
