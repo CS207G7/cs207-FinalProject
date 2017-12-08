@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+
 import numpy as np
 from kinetics.nasa import getNASACoeff
 import xml.etree.ElementTree as ET
