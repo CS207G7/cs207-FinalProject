@@ -1,7 +1,7 @@
 import numpy as np
 from kinetics.nasa import getNASACoeff
 import xml.etree.ElementTree as ET
-from history import History as his
+from kinetics.history import History as his
 
 
 class ReactionParser:
