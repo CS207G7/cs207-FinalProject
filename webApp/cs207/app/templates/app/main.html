@@ -105,28 +105,35 @@
                 <input class="form-check-input" type="checkbox" name="non_reversible"> Non-Reversible
               </label>
             </div>
-            <button class="btn btn-outline-success my-2 my-sm-0">{{ button_title | default:"Search" }}</button>
+            <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
           </form>
           <hr></hr>
           <h5 style="color:gray;">retrieved</h5>
 
-            <div id="accordion" role="tablist" aria-multiselectable="true">
+          <div id="accordion" role="tablist" aria-multiselectable="true">
+          {% for reaction_set in data %}
               <div class="card">
-                <div class="card-header" role="tab" id="headingOne">
-                  <h5 class="mb-0">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Collapsible Group Item #1
-                    </a>
-                  </h5>
-                </div>
-
-                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                  <div class="card-block">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                  </div>
-                </div>
+              <div class="card-header" role="tab" id="h{{reaction_set.id}}">
+                <h5>
+                  {% if forloop.first %}
+                      <a data-toggle="collapse" data-parent="#accordion" href="#c{{reaction_set.id}}" aria-expanded="true" aria-controls="#c{{reaction_set.id}}">reaction set {{reaction_set.id}}</a>
+                  {% else %}
+                      <a data-toggle="collapse" data-parent="#accordion" href="#c{{reaction_set.id}}" aria-expanded="false" aria-controls="#c{{reaction_set.id}}">reaction set {{reaction_set.id}}</a>
+                  {% endif %}
+                </h5>
               </div>
-            </div>
+                {% if forloop.first %}
+                  <div id="c{{reaction_set.id}}" class="collapse show" role="tabpanel" aria-labelledby="h{{reaction_set.id}}">
+                    <div class="card-block">{{reaction_set.reactions}}</div>
+                  </div>
+                {% else %}
+                  <div id="c{{reaction_set.id}}" class="collapse" role="tabpanel" aria-labelledby="h{{reaction_set.id}}">
+                    <div class="card-block">{{reaction_set.reactions}}</div>
+                  </div>
+                {% endif %}
+              </div>
+          {% endfor %}
+           </div>
         
         </main>
       </div>

@@ -11,8 +11,6 @@ def main(request):
 @csrf_exempt
 def filters(request):
 	
-	button_title = '...'
-	render(request, 'app/main.html', {'button_title':button_title})
 	# species, T, reversible, non_reversible
 	query = {}
 	
@@ -56,7 +54,10 @@ def filters(request):
 		query['type'] = 'both'
 
 	### waiting for the result
-	return render(request, 'app/main.html')#render_to_response('app/main.html')
+
+	return render_to_response('app/main.html', {'data':[ {'id':1, 'reactions':'Learn Django 2.0 by building multiple web applications starting with Hello World and progressing to a robust blog app with user accounts.'},  \
+		{'id':2, 'reactions': "I'm starting today a new tutorial series about the Django fundamentals. It's a complete beginner's guide to start learning Django. The material is divided in..."},\
+		{'id':3, 'reactions':'Django Girls tutorial - the course material used for the DjangoGirls workshops · ​Learn Django - An entry level and project based course to learn Django · ​Intuitive 20 video tutorial series for Django beginners · ​Short beginner tutorial on building a basic blog site · ​Full Web Framework Python Django ...'}]})
 	
 
 
