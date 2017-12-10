@@ -159,5 +159,5 @@ def testDatabaseQuery():
 	print(result1, result2)
 
 if __name__ == "__main__":
-	print("HERE!")
 	testDatabaseQuery()
+	
