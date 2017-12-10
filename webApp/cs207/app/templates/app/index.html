@@ -1,0 +1,358 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Chemkin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %" rel="stylesheet">
+    <link href="{% static 'vendor/devicons/css/devicons.min.css" rel="stylesheet' %">
+    <link href="{% static 'vendor/simple-line-icons/css/simple-line-icons.css' %" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/resume.min.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none"></span>
+        <span class="d-none d-lg-block">
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="static/img/flame_red.gif" alt="">
+        </span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#toolkit">TOOLKIT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#installation">INSTALLATION</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#main_utilities">Main Utilities</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#reversible_reactions">Reversible Reactions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#example">Example</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#New_Features">Add'l Feature: History</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+     <div class="container-fluid p-0">
+      <section class="resume-section p-3 p-lg-5 d-flex d-column" id="toolkit">
+        <div class="my-auto">
+          <h1 class="mb-0">CS207
+            <span class="text-primary">chemkin</span>
+          </h1>
+          <div class="subheading mb-5">Group_7
+            <a href="https://github.com/CS207G7/cs207-FinalProject">https://github.com/CS207G7/cs207-FinalProject</a>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">TOOLKIT</h3>
+              <p class="mb-5">This chemkin is a collection of algorithms aimed at predicting the time evolution of species concentration, finding the rate of change of a chemical species and calculating the rate of change of a certain specie. The toolkit is designed for flexibility, portability, easiness of use and easiness of extension. Its software design follows an object-oriented approach and its code is written on Python.</p>
+              <p> For multiple elementary reactions the rate of change follows the form:
+              <img src="static/img/formula/reaction_formula.jpg" width="50%">
+              </p>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="installation">
+        <div class="my-auto">
+          <h2 class="mb-5">Installation</h2>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Install the Module</h3>
+              <p>Install the package pip3 install cs207_g7, and from kinetics import chemkin, and you can access any function you wish. Notice that for this installation method, to run the test suite, you need to navigate to the root foler of this package.</p>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Clone the Repo</h3>
+              <p>Clone the repo, and run python3 setup.py install, to run the test suite, run python3 setup.py test.</p>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="main_utilities">
+        <div class="my-auto">
+          <h2 class="mb-5">Main Utilities</h2>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Parse Reactions from XML</h3>
+              <div class="subheading mb-3">parsed = chemkin.ReactionParser('path_to_reaction_xml')</div>
+              <div>The method chemkin.ReactionParser() parses XML files and returns the details of the reactions contained like species name, reaction type, reaction's concentration, and temperature.</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Wrap Parsed Reactions into Reaction Class</h3>
+              <div class="subheading mb-3">reactions = chemkin.Reaction(parsed, T)</div>
+              <div>The method chemkin.Reaction() wrap the reactions' detail into a Reaction Class at a given Temperature (T).</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Obtain Reaction Components</h3>
+              <div class="subheading mb-3">V1, V2 = reactions.reaction_components()</div>
+              <div>The method reactions.reaction_components() stacks each v1 into V1, and each v2 to V2 for each reaction.</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0"> Obtain Reaction Coefficients</h3>
+              <div class="subheading mb-3">k = reactions.reaction_coeff_params()</div>
+              <div>The method reactions.reaction_coeff_params() returns the reaction coefficients both for Reversible and Irreversible reactions. Furthermore it returns the coefficient accordingly with the given datasets. For instance, if Arrhenius is found it checks whether using the standard or the modified version.
+              </div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">  Obtain Reaction Rates</h3>
+              <div class="subheading mb-3">rr = chemkin.ChemKin.reaction_rate(V1, V2, X, k)</div>
+              <div>The method chemkin.ChemKin.reaction_rate() return the reaction rate for the given concentration (X) and reaction coefficient (k) of the set of species involved in the reaction as reactants (V1) and products (V2).
+              </div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="reversible_reactions">
+        <div class="my-auto">
+          <h2 class="mb-5">Reversible Reactions</h2>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Retrieve NASA Polynomial Coefficients</h3>
+              <div class="subheading mb-3"> NASA = reactions.get_nasa_coeffs()</div>
+              <div>The method reactions.get_nasa_coeffs() returns the coefficients for each species at a given temperature.</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Compute Enthalpy</h3>
+              <div class="subheading mb-3">Enthalpy = reactions.H_over_RT()</div>
+              <div>The method reactions.H_over_RT() return the Enthalpy for a given temperature (T) of a backward reaction that will be calculated following the form:</div>
+              <div style="font-size:2px">
+              <img src="static/img/formula/H_over_RT_formula.jpg" width="70% align="absbottom" style="display:block">
+              </div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Compute Entropy</h3>
+              <div class="subheading mb-3">Entropy = S_over_R()</div>
+              <div>The method reactions.S_over_R() return the Enthalpy for a given temperature (T) of a backward reaction that will be calculated following the form:</div>
+              <div style="font-size:2px">
+              <img src="static/img/formula/S_over_R_formula.jpg" width="75% align="absbottom" style="display:block">
+              </div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0"> Compute Backward Reaction Coefficients</h3>
+              <div class="subheading mb-3">k = reactions.backward_coeffs()</div>
+              <div>The method reactions.backward_coeffs() returns the reaction coefficients for Reversible reactions that will be calculated following the form:
+              </div>
+              <div style="font-size:2px">
+              <img src="static/img/formula/backward_coeffs_formula.jpg" width="65% align="absbottom" style="display:block">
+              </div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0"> Compute Reversible Reaction Rate</h3>
+              <div class="subheading mb-3"></div>
+              <div>For reversible elementary reactions the rate of change follows the form:
+              <div style="font-size:2px">
+              <img src="static/img/formula/reversible_reaction_formula.jpg" width="75% align="absbottom" style="display:block">
+              </div>
+              </div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="example">
+        <div class="my-auto">
+          <h2 class="mb-5">Example</h2>
+          <p>The following code snippet shows an entire example that computes the reaction rate:</p>
+          <ul class="fa-ul mb-0">
+          <blockquote style=" padding: 20px; background-color: #eee; width:500px; ">
+          <p>
+            >>> from kinetics.chemkin import ChemKin, ReactionParser, Reaction</p>
+          <p>
+            >>> T = 750</p>
+          <p>
+            >>> X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]</p>
+          <p>
+            >>> reactions = Reaction(ReactionParser('your_xml'), T)</p>
+          <p>
+            >>> V1, V2 = reactions.reaction_components()</p>
+          <p>
+            >>> k = reactions.reaction_coeff_params()</p>
+          <p>
+            >>> rrs = ChemKin.reaction_rate(V1, V2, X, k)</p>
+          <p>
+            >>> print ( rrs )</p>
+          </blockquote>
+          </ul>
+        </div>
+      </section>
+      </section>
+
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="New_Features">
+        <div class="my-auto">
+          <h2 class="mb-5">Add'l Feature: History</h2>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Motivation and Feature Description</h3>
+              <div class="subheading mb-3"> FIND REACTIONS... QUICK</div>
+              <div>Our team developed a feature able to keep track of all the elementary reactions computed by a user.
+              The feature efficiently browses into a list of reactions that have been computed and it sorts them by elements of interest such as species, temperature, date, and reversible or non-reversible reactions.
+              We think that the feature could be really useful for scientists interested in building their own database of elementary reactions. Indeed, the devised feature allow the user to explore reactions without the need for computing again. (Beside saving time for the computation, the user might grow its own database that could be eventually shared with other users).
+              Our feature ultimately allows the user to find quickly the information related to the reactions already computed.</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Feature and Code Base</h3>
+              <div class="subheading mb-3"> </div>
+              <div>The feature fits into our code base because it stores each reaction computed by chemkin. Our feature stores them in a database adjacent to the one with NASA polynomials. The code allows the user to find reactions choosing among different element of interests using the methods enfolded in the module section where it is explained how do they work.</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Module</h3>
+              <div class="subheading mb-3">History.py</div>
+              <div>Our team has built a module history.py. It handles the results of each reactions computed by the user and It also stores them into a sqlite3 database. Thanks to the module History.py, the user is able to access the information contained in the database using the methods that follows.</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">Methods</h3>
+              <div class="subheading mb-3">get_type()</div>
+              <p>This method is enabled by inputting the type(i.e. reversible or not reversible) of the reaction. It returns the list of reactions of similar type.</p>
+              <div class="subheading mb-3">get_specie()</div>
+              <p> This method is enabled by inputting species of the reaction (e.g. H, H2, O2, etc.). It returns the list of reactions computed with the same species.</p>
+              <div class="subheading mb-3">get_temperature()</div>
+              <p> This method is enabled by inputting temperature of the reactions. It returns the list of reactions computed with the same temperature.</p>
+              <div class="subheading mb-3">get_by_date()</div>
+              <p> This method is enabled by inputting the date on which the reaction has been computed. It returns the list of reactions computed in the same date.</p>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">User's Experience</h3>
+              <div class="subheading mb-3"> </div>
+              <div>The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc).</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+          </div>
+          <div class="resume-item d-flex flex-column flex-md-row mb-5">
+            <div class="resume-content mr-auto">
+              <h3 class="mb-0">External Dependencies</h3>
+              <div class="subheading mb-3"> </div>
+              <div> The module History depend primarily on (sqlite3).</div>
+            </div>
+            <div class="resume-date text-md-right">
+              <span class="text-primary"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static 'js/resume.min.js' %}"></script>
+
+  </body>
+
+</html>
