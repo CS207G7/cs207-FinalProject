@@ -19,7 +19,6 @@ class History:
 		self.password="cs207g72017"
 		self.db = pymysql.connect(self.host, user=self.user, port=self.port, passwd=self.password, db=self.dbname)
 
-
 	def write(self):
 		cursor = self.db.cursor()
 		created_at = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -85,3 +84,80 @@ class History:
 					   reversibility, equation, coeff_params, v1, v2, createdAt) 
 					   VALUES (%s, %s, %s, %s, %s, %s, %s, %s)''', vals_to_insert)
 		self.db.commit()
+
+
+
+class HistoryReader:
+	def __init__(self):
+		self.host="cs207reactions.cuj7kddh2nbn.us-east-1.rds.amazonaws.com"
+		self.port=3306
+		self.dbname="cs207reactions"
+		self.user="rafettob"
+		self.password="cs207g72017"
+		self.db = pymysql.connect(self.host, user=self.user, port=self.port, passwd=self.password, db=self.dbname)
+
+	def getCursor(self):
+	    if not self.db.open:
+	        self.db = pymysql.connect(host, user=user,port=port, passwd=password, db=dbname)
+	    return self.db.cursor()
+
+	# DEAL WITH SPACES
+	def buildQueriesFromDict(self, dictionary):
+	    query = ""
+	    constraints = []
+	    
+	    #All given species must be included
+	    species = dictionary['species']
+	    if species != None:
+	        if type(species) is not list:
+	            species = [species]
+	        for specie in list(species):
+	            constraints.append('''species LIKE '%{}%\''''.format(specie))
+
+	    #Temperature in given range
+	    temp = dictionary['temp']
+	    if temp is not None:
+	        constraints.append('''T {} {}'''.format(temp['cmp'], temp['T']))
+	    
+	    #For reversibility, need to query the set of all reactions to find distinct
+	    #reactions_sets with eligible reactions, and then use that as a subquery
+	    reversible = dictionary['type']
+	    if reversible is not None:
+	        if reversible == 'reversible' or reversible == 'non_reversible':
+	            query_set = '''SELECT DISTINCT reaction_set_id FROM reaction ''' + \
+	                '''WHERE reversibility = {}'''.format(reversible == 'reversible')
+	            constraints.append('''reaction_set_id IN ({})'''.format(query_set))
+	    
+	    #Turn constraints into a query
+	    for i, constraint in enumerate(constraints):
+	        if i == 0:
+	            query += " WHERE " + constraint
+	        else:
+	            query += " AND " + constraint
+	    
+	    query_sets = "SELECT * FROM reaction_set" + query
+	    query_reactions = "SELECT B.* FROM reaction_set A LEFT JOIN reaction B ON A.reaction_set_id = B.reaction_set_id" + query
+	    
+	    return query_sets, query_reactions
+
+	def queryDatabase(self, dictionary):
+	    query1, query2 = self.buildQueriesFromDict(dictionary)
+	    cursor = self.getCursor()
+	    cursor.execute(query1)
+	    A = cursor.fetchall()
+	    cursor.execute(query2)
+	    B = cursor.fetchall()
+	    return A, B
+
+def testDatabaseQuery():
+	hr = HistoryReader()
+	queryDict = {'species': None, 'temp': None, 'type': None}
+	#queryDict['species'] = ["H", "O"]
+	queryDict['temp'] = {'T': 1600, 'cmp': '<'}
+	#queryDict['type'] = 'non_reversible'
+	result1, result2 = hr.queryDatabase(queryDict)
+	print(result1, result2)
+
+if __name__ == "__main__":
+	print("HERE!")
+	testDatabaseQuery()
