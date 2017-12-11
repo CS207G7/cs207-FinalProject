@@ -13,7 +13,7 @@
     <link href="../../static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
+    <!-- <link href="dashboard.css" rel="stylesheet"> -->
   </head>
 
   <body>
@@ -52,14 +52,14 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Search History</a>
             </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModalLong">NASA coeffs</a>
+            </li> -->
             <li class="nav-item">
-              <a class="nav-link" href="#">NASA coeffs</a>
+              <a class="nav-link" href="/app/docs">Documentation</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Documentation</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"></a>
+              <a class="nav-link" href=""></a>
             </li>
             <li class="nav-item">
               <p class="nav-link">version 1.2.0</p>
@@ -109,32 +109,96 @@
           </form>
           <hr></hr>
           <h5 style="color:gray;">retrieved</h5>
-
-          <div id="accordion" role="tablist" aria-multiselectable="true">
+          {% if empty %}
+            <p>No matching result</p>
+          {% else %}
+            <div id="accordion" role="tablist" aria-multiselectable="true">
           {% for reaction_set in data %}
               <div class="card">
-              <div class="card-header" role="tab" id="h{{reaction_set.id}}">
-                <h5>
+              <div class="card-header" role="tab" id="h{{reaction_set.rsid}}">
+                <div>
                   {% if forloop.first %}
-                      <a data-toggle="collapse" data-parent="#accordion" href="#c{{reaction_set.id}}" aria-expanded="true" aria-controls="#c{{reaction_set.id}}">reaction set {{reaction_set.id}}</a>
+                      <a data-toggle="collapse" data-parent="#accordion" href="#c{{reaction_set.rsid}}" aria-expanded="true" aria-controls="#c{{reaction_set.id}}">
+                        <h6>Reaction set {{reaction_set.rsid}}</h6>
+                      </a>
+                      <p size="6">computed at <i>{{reaction_set.createAt}}</i> from file <i>{{reaction_set.origin}}</i></p>
                   {% else %}
-                      <a data-toggle="collapse" data-parent="#accordion" href="#c{{reaction_set.id}}" aria-expanded="false" aria-controls="#c{{reaction_set.id}}">reaction set {{reaction_set.id}}</a>
+                      <a data-toggle="collapse" data-parent="#accordion" href="#c{{reaction_set.rsid}}" aria-expanded="false" aria-controls="#c{{reaction_set.rsid}}">
+                        <h6>Reaction set {{reaction_set.rsid}}</h6>
+                      </a>
+                      <p>computed at <i>{{reaction_set.createAt}}</i> from file <i>{{reaction_set.origin}}</i></p>
                   {% endif %}
-                </h5>
+                </div>
               </div>
                 {% if forloop.first %}
-                  <div id="c{{reaction_set.id}}" class="collapse show" role="tabpanel" aria-labelledby="h{{reaction_set.id}}">
-                    <div class="card-block">{{reaction_set.reactions}}</div>
-                  </div>
+                  <div id="c{{reaction_set.rsid}}" class="collapse show" role="tabpanel" aria-labelledby="h{{reaction_set.rsid}}">
                 {% else %}
-                  <div id="c{{reaction_set.id}}" class="collapse" role="tabpanel" aria-labelledby="h{{reaction_set.id}}">
-                    <div class="card-block">{{reaction_set.reactions}}</div>
-                  </div>
+                   <div id="c{{reaction_set.rsid}}" class="collapse" role="tabpanel" aria-labelledby="h{{reaction_set.rsid}}">
                 {% endif %}
+                    <div class="card-block">
+                      <div class="card">
+                        <div class="card-header">Reaction Set General Info</div>
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item">
+                            <p>Temperature:&nbsp;&nbsp;{{reaction_set.T}}</p>
+                            <p># Reactions:&nbsp;&nbsp;{{reaction_set.num_reaction}}</p>
+                          </li>
+                          <li class="list-group-item">species:&nbsp;&nbsp;{{reaction_set.species}}</li>
+                          <li class="list-group-item">Concentration:&nbsp;&nbsp;{{reaction_set.x}}</li>
+                           <li class="list-group-item">Reaction rates:&nbsp;&nbsp;{{reaction_set.rrs}}</li>
+                          <li class="list-group-item"></li>
+                        </ul>
+                      </div>
+                      {% for reaction in reaction_set.reactions %}
+                        <div class="card">
+                          <div class="card-header"> Reaction {{reaction.rid}} </div>
+                          <ul class="list-group list-group-flush">
+                                <li class="list-group-item">equation:&nbsp;&nbsp;{{reaction.equation}}</li>
+                                <li class="list-group-item">
+                                  <p>Reaction type:&nbsp;&nbsp;{{reaction.rtype}}</p>
+                                  <p>Reversible:&nbsp;&nbsp;{{reaction.reversible}}</p>
+                                </li>
+                              <li class="list-group-item">Coeffs paramters:&nbsp;&nbsp;{{reaction.coeff_params}}</li>
+                              <li class="list-group-item">V1:&nbsp;&nbsp;{{reaction.V1}}</li>
+                              <li class="list-group-item">V2:&nbsp;&nbsp;{{reaction.V2}}</li>
+                        </ul>
+                        </div>
+                      {% endfor %}
+
+                    </div>
+                  </div>
               </div>
           {% endfor %}
            </div>
-        
+          {% endif %}
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5>H2</h5>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">T</th>
+                        <th scope="col">NASA Coeffs</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     </div>
