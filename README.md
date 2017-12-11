@@ -130,7 +130,7 @@ As the user continues to enjoy the benefits of chemkin for caulating reactions, 
 
 Our team has built a module `history.py`. It handles the results of each reactions computed by the user and It also stores them into a MySQL database. Thanks to the module History.py, the user is able to access the information contained in the database.
 
-To access the history, please visit: http://52.91.33.182/app/
+To access the history, please visit: http://54.89.19.185/app/
 
 ### Methods
 
@@ -138,11 +138,11 @@ The user cannot access directely to the methods because they are performed "unde
 
 ### User's Experience
 
-The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc). The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, and clicking the search button, the the details of the reactions that match the query will be retrieved from the cloud database. The following screenshot shows the webpage.
+The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc). The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, and clicking the search button, the the details of the reactions that match the query will be retrieved from the cloud database. The following screenshot shows the webpage that allows for retrieving reactions from the database.
 
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/webapp.jpg" width="60%">
 
-Note that for privacy consideration, you can compute reaction rate without uploading them to the central database, to do so, just follow the example showed in the above "A Complete Example" section. However, we also provide a easy API for you to compute and upload the results.
+The user can compute easily reaction rate and store them in the central database. We provide an easy API to compute and upload the results. The following code snippet shows an example:
 
 ```python
 
@@ -158,6 +158,7 @@ compute('your/path/to/xml/file', T, X)
 
 ```
 
+Note that for privacy consideration, you can compute reaction rate without uploading them to the central database, to do so, just follow the example showed in the section "Example".
 
 ### External Dependencies
 
