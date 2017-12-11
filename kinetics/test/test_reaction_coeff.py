@@ -14,21 +14,9 @@ class test_reaction_coeffs(unittest.TestCase):
 
 	def test_constant_value_decimals(self):
 	     assert(chemkin.ChemKin.reaction_coeff.constant(4.734) == 4.734)
-	    
-	## testing for errors
-	###type
-	def test_constant_type(self):
-	    try:
-	        chemkin.ChemKin.reaction_coeff.constant("Cool")
-	    except TypeError as err:
-	        assert(type(err) == TypeError)
-
-	###value
-	def test_constant_value_negative(self):
-	    try:
-	        chemkin.ChemKin.reaction_coeff.constant(-5)
-	    except ValueError as err:
-	        assert(type(err) == ValueError)
+	
+	#The right way to check assertRaises   
+	#self.assertRaises(Exception, chemkin.ChemKin.reaction_coeff.constant, "Cool")
 
 	#except Exception as err:
 	#assert type(err) == TypeError, "Bad products should raise a TypeError."
