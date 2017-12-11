@@ -128,6 +128,8 @@ he feature fits into our code base because it stores each reaction computed by c
 
 Our team has built a module `history.py`. It handles the results of each reactions computed by the user and It also stores them into a MySQL database. Thanks to the module History.py, the user is able to access the information contained in the database.
 
+To access the history, please visit: http://52.91.33.182/app/
+
 ### Methods
 
 The user cannot access directely to the methods because they are performed "under the hood" from our Web App which handles the user's queries. If the users want to get access to methods, he must download the package and call the methods.
@@ -139,8 +141,19 @@ The feature allows for querying three different categories: species, reaction an
 
 ### External Dependencies
 
-The module History depend primarily on MySQL.
+The history module depends primarily on a MySQL instance hosted on AWS, and a web interface built with Django and also hosted on AWS. All external libraries required for this addin at the user level (only pymysql) should be automatically installed along with cs207_g7.
 
-''''
-Coming Soon
-''''
+### How to Run Tests
+
+If you would like run tests, please use the following steps:
+1. Clone our github repository to your local computer
+2. Navigate into the cs207-FinalProject folder
+3. pytest kinetics 
+
+### How to Contribute!
+
+If you like our work and would like to contribute to future development of ChemKin, please start by setting up a local fork of our repository, playing around with our code, and then email us at (brafetto at g.harvard.edu) to request permission to contribute. A great place to start would be the list of open issues: https://github.com/CS207G7/cs207-FinalProject/issues
+
+If you have never contributed to a github project before, feel free to look at this link for guidelines: https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
+
+Alternatively, if you'd like to contribute in other ways we also accept bitcoin donations.
