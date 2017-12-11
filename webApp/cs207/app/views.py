@@ -152,19 +152,13 @@ class HistoryReader():
 	    						'createAt': createAt,
 	    						'reactions':[]
 	    					}
-
-	    prev_rsid, current_total = list(res_dicts.keys())[0], 0
 	    
 	    for reaction in B:
 
 	    	rid, rsid, rtype, reversible, equation, \
 	    			coeff_params, V1, V2, createAt = reaction
 
-	    	if rsid != prev_rsid:
-	    		current_total += res_dicts[prev_rsid]['num_reaction']
-	    	prev_rsid = rsid
-
-	    	res_dicts[rsid]['reactions'].append({'rid':rid - current_total, 'rsid':rsid, 'rtype':rtype, \
+	    	res_dicts[rsid]['reactions'].append({'rid':rid, 'rsid':rsid, 'rtype':rtype, \
 	    			'reversible': bool(reversible), 'equation':equation, \
 	    			'coeff_params':coeff_params, 'V1':V1, 'V2':V2, 'createAt':createAt})
 

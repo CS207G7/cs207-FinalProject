@@ -110,7 +110,7 @@ print ( rrs )
 
 New Feature : Centralized History!
 ------------
-### Motivation and Feature Description
+### Introduction - Motivation and Feature Description
 
 For too long, chemists around the world have had to run all their reaction rates individually, with no idea what others were running, and no way to easily share their work. In order to save on computational complexity and runtime, we have developed a feature that records all the details of any reaction set that is run.
 
@@ -126,7 +126,7 @@ Our feature ultimately allows the user to find quickly the information related t
 
 As the user continues to enjoy the benefits of chemkin for caulating reactions, our feature seamlessly uploads results to the central database each time chemkin is run. Our feature stores them in a database similar to the one used for NASA polynomials, but hosted on the cloud to be available for anyone. The website then allows the user to find reactions choosing among different element of interests.
 
-### Module: History.py
+#### Module: History.py
 
 Our team has built a module `history.py`. It handles the results of each reactions computed by the user and It also stores them into a MySQL database. Thanks to the module History.py, the user is able to access the information contained in the database.
 
@@ -138,8 +138,9 @@ The user cannot access directely to the methods because they are performed "unde
 
 ### User's Experience
 
-The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc).
-The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, the feature return the details of the reactions that match the query.
+The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc). The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, and clicking the search button, the the details of the reactions that match the query will be retrieved from the cloud database. The following screenshot shows the webpage.
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/webapp" width="40%">
+
 
 ### External Dependencies
 
@@ -158,4 +159,4 @@ If you like our work and would like to contribute to future development of ChemK
 
 If you have never contributed to a github project before, feel free to look at this link for guidelines: https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
 
-Or, if you'd like to contribute in other ways we also accept bitcoin.
+Or, if you'd like to contribute in other ways we also accept bitcoin 😎.
