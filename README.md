@@ -152,8 +152,8 @@ If you would like run tests, please use the following steps:
 
 ### How to Contribute!
 
-If you like our work and would like to contribute to future development of ChemKin, please start by setting up a local fork of our repository, playing around with our code, and then email us at (brafetto at g.harvard.edu) to request permission to contribute. A great place to start would be the list of open issues: https://github.com/CS207G7/cs207-FinalProject/issues
+If you like our work and would like to contribute to future development of ChemKin, please start by setting up a local fork of our repository, playing around with the code, and then email us at (brafetto at g.harvard.edu) with an idea of what you would like work on to request permission to contribute. A great place to start would be the list of open issues: https://github.com/CS207G7/cs207-FinalProject/issues
 
 If you have never contributed to a github project before, feel free to look at this link for guidelines: https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
 
-Alternatively, if you'd like to contribute in other ways we also accept bitcoin donations.
+Or, if you'd like to contribute in other ways we also accept bitcoin.
