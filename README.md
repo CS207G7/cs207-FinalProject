@@ -14,9 +14,14 @@ This `chemkin` is a collection of algorithms aimed at predicting the time evolut
 
 Installation
 ------------
-1. Install the package `pip3 install cs207_g7`, and `from kinetics import chemkin`, and you can access any function you wish. Notice that for this installation method, to run the test suite, you need to navigate to the root foler of this package.
-2. Clone the repo, and run `python3 setup.py install`, to run the test suite, run `python3 setup.py test`.
-3. If you are interested in contributing, please ... follow the instructions.
+Install the package with `pip3 install cs207_g7`, and then `from kinetics import chemkin` and you can access any function you wish.
+
+How to Run Tests
+------------
+If you would like run tests, please use the following steps:
+1. Clone our github repository to your local computer
+2. Navigate into the cs207-FinalProject folder
+3. pytest kinetics 
 
 Main Utilities
 ------------
@@ -138,7 +143,7 @@ The user cannot access directely to the methods because they are performed "unde
 
 ### User's Experience
 
-The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc). The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, and clicking the search button, the the details of the reactions that match the query will be retrieved from the cloud database. The following screenshot shows the webpage.
+The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc). The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, and clicking the search button, the details of the reactions that match the query will be retrieved from the cloud database. The following screenshot shows the webpage.
 
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/webapp.jpg" width="60%">
 
@@ -154,7 +159,7 @@ T = 750
 X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5] 
 
 # this will compute the results and upload to the database automatically
-compute('your/path/to/xml/file', T, X) 
+chemkin.compute('your/path/to/xml/file', T, X) 
 
 ```
 
@@ -162,13 +167,6 @@ compute('your/path/to/xml/file', T, X)
 ### External Dependencies
 
 The history module depends primarily on a MySQL instance hosted on AWS, and a web interface built with Django and also hosted on AWS. All external libraries required for this addin at the user level (only pymysql) should be automatically installed along with cs207_g7.
-
-### How to Run Tests
-
-If you would like run tests, please use the following steps:
-1. Clone our github repository to your local computer
-2. Navigate into the cs207-FinalProject folder
-3. pytest kinetics 
 
 ### How to Contribute!
 
