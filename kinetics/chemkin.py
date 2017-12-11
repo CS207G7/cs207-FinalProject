@@ -465,7 +465,7 @@ def compute(path, T, X):
 	his(filename, reactions, T, X, rr).write()
 	return rr
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
 
 	"""
 	parsed = ReactionParser('path_to_reaction_xml')
