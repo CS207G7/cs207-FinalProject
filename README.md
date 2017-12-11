@@ -15,11 +15,12 @@ This `chemkin` is a collection of algorithms aimed at predicting the time evolut
 Installation
 ------------
 1. Install the package `pip3 install cs207_g7`, and `from kinetics import chemkin`, and you can access any function you wish. Notice that for this installation method, to run the test suite, you need to navigate to the root foler of this package.
-2. Clone the repo, and run `python3 setup.py install`, to run the test suite, run `python3 setup.py test`. 
+2. Clone the repo, and run `python3 setup.py install`, to run the test suite, run `python3 setup.py test`.
+3. If you are interested in contributing, please ... follow the instructions.
 
 Main Utilities
 ------------
-### 1. Parse raw reactions from XML
+### Parse raw reactions from XML
 
 ```python
 parsed = chemkin.ReactionParser('path_to_reaction_xml')
@@ -30,20 +31,20 @@ parse the XML and obtain the following reaction details:
 2. basic information, such as reaction id, reaction type, reaction equations, and etc.
 3. `v1` and `v2` for each reaction
 
-### 2. Wrap parsed raw reactions into Reaction class
+### Wrap parsed raw reactions into Reaction class
 ```python
 reactions = chemkin.Reaction(parsed, T)
 ```
 wrap the reactions information into a Reaction Class. Temperature T at this step.
 
-### 3. Obtain reaction components for each reaction
+### Obtain reaction components for each reaction
 ```python
 V1, V2 = reactions.reaction_components()
 ```
 since there could be multiple reactions inside a given reaction set, 
 we stack each `v1` into `V1`, and each `v2` to `V2`
 
-### 4. Obtain reaction coeffs for each reaction
+### Obtain reaction coeffs for each reaction
 ```python
 k = reactions.reaction_coeff_params()
 ```
@@ -51,43 +52,43 @@ since the coefficient type is implicity given in the XML file. If `Arrhenius` is
 is given to decide using modified or regular arr; if `Constant` is found, we use constant coeff. 
 we only need user to provide T of the current reaction set, and return the list of reaction coeffs. Notice that this function can handle both reversible and non-reversible reactions. If your reaction set contains both reversible and non-reversible reactions, no worries, the function can also handle them. We will show how we handle reversible actions later.
 
-### 5. Obtain reaction rates for each reaction
+### Obtain reaction rates for each reaction
 ```python
 rr = chemkin.ChemKin.reaction_rate(V1, V2, X, k)
 ```
 The last thing we need user to provide is the `X`: concentration of species. With `V1`, `V2`, and `k` computed,
 user can easily obtian reaction rate for each speicies.
 
-How to Handle Reversible Actions
+How to Handle Reversible Reactions
 ------------
-### 1. NASA polynomial coeffs
+### NASA polynomial coeffs
 We first build up a database contains the NASA polynomial coeffs for each species. We can easily obtain the NASA coeffs for any species by
 ```python
 get_nasa_coeffs()
 ```
 Based on the T given, the coefficients will be extracted correspondingly.
-### 2. Enthalpy, H_over_RT
+### Enthalpy, H_over_RT
 Then, we calculate the Enthalpy using the coefficients for each specie and the reaction's temperature. To obtain the Enthaply we used the following method
 ```python
 H_over_RT()
 ```
 Based on the T given, the Entalphy will be calculated following the form:
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/H_over_RT_formula.JPG" width="40%">
-### 3. Entropy, S_over_T
+### Entropy, S_over_T
 After, we calculate the Entropy using the coefficients for each specie and the reaction's temperature. To obtain the Entropy we used the following method
 ```python
 S_over_R()
 ```
 Based on the T given, the Entropy will be calculated following the form:
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/S_over_R_formula.JPG" width="40%">
-### 4. Backward Reaction Coefficients
+### Backward Reaction Coefficients
 Then, we calculated the backward reaction coefficients using the following method:
 ```python
 backward_coeffs()
 ```
 Based on the forward reaction rates, the backwards reaction coefficients will be calculated following the form:
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/backward_coeffs_formula.JPG" width="40%">
-### 5. Reversible Reaction Rate
+### Reversible Reaction Rate
 For reversible elementary reactions the rate of change follows the form:
 <img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/reversible_reaction_formula.JPG" width="40%">
 
@@ -96,9 +97,7 @@ A Complete Example
 The following code sinppet shows an entire example that computes the reaction rate:
 
 ```python
-from kinetics.chemkin import Reaction
-from kinetics.chemkin import ReactionParser
-from kinetics.chemkin import ChemKin
+from kinetics.chemkin import Reaction, ReactionParser, ChemKin
 
 T = 750
 X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
@@ -111,64 +110,36 @@ print ( rrs )
 
 Future Features
 ------------
-### 1.Motivation and Feature Description
+### Motivation and Feature Description
 
-Our team of software developers expect to deliver a feature able to keep track of all the elementary reactions computed by a user.
+Our team developed a feature able to keep track of all the elementary reactions computed by a user.
 
-The feature will efficiently browse into a list of reactions that have been computed and it will sort them by elements of interest such as species, temperature, date, and reversible or non-reversible reactions.
+The feature efficiently browses into a list of reactions that have been computed and it sorts them by elements of interest such as species, temperature, date, and reversible or non-reversible reactions.
 
-We think that the feature will be really useful for scientists interested in building their own database of elementary reactions. The devised feature will allow the user to explore reactions without the need for computing again. Beside saving time for the computation, the user might grow its own database that could be eventually shared with other users. 
+We think that the feature will be really useful for scientists interested in building their own database of elementary reactions. Indeed, the devised feature allow the user to explore reactions without the need for computing again. Beside saving time for the computation, the user might grow its own database and share it with other users.
 
-Our feature will ultimately allow the user to find quickly the information related to the reactions already computed.
+Our feature ultimately allows the user to find quickly the information related to the reactions already computed.
 
-### 2.Feature and Code Base (and Package)
+### Feature and Code Base
 
-The feature is going to fit into our code base because it will store each reaction computed by chemkin. Our feature will store them in a database either adjacent to or combined with the NASA polynomials. Updates to our code will give the user methods enfolded in the module to find the reactions requested by the user.
+he feature fits into our code base because it stores each reaction computed by chemkin. Our feature stores them in a database adjacent to the one with NASA polynomials. The code allows the user to find reactions choosing among different element of interests.
 
-### 3.Module
+### Module: History.py
 
-Our team is going to build a module  `history.py`. It will handle the results of each reactions computed by the user. It will store them into a sqlite3 database. The user will be able to access the information contained in the database thanks to the feature using the methods that follows.
+Our team has built a module `history.py`. It handles the results of each reactions computed by the user and It also stores them into a MySQL database. Thanks to the module History.py, the user is able to access the information contained in the database.
 
-### 4.Methods
+### Methods
 
-A preliminary list of methods for selecting the reactions are listed below (parameters will be filled in at a later date):
+The user cannot access directely to the methods because they are performed "under the hood" from our Web App which handles the user's queries. If the users want to get access to methods, he must download the package and call the methods.
 
-**get_type()**
-The method
-```python
-get_type()
-```
-is enabled by inputting the type(i.e. reversible or not reversible) of the reaction. This method returns the list of reactions of similar type.
+### User's Experience
 
-**get_specie()**
-The method
-```python
-get_specie()
-```
-is enabled by inputting species of the reaction (e.g. H, H2, O2, etc.). This method returns the list of reactions computed with the same species.
+The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc).
+The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, the feature return the details of the reactions that match the query.
 
-**get_temperature()**
-The method
-```python
-get_temperature()
-```
-is enabled by inputting temperature of the reactions.This method returns the list of reactions computed with the same temperature.
+### External Dependencies
 
-**get_by_date()**
-The method
-```python
-get_by_date()
-```
-is enabled by inputting the date on which the reaction has been computed. This method returns the list of reactions computed in the same date.
-
-
-### 5.User's Experience
-
-The user will be able to query any information contained in the reactions that have been computed. For instance, the user will be able to find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc).
-
-### 6.External Dependencies
-
-No additional external dependencies are anticipated to be required beyond what is used by our current version. Our new features will depend primarily on `sqlite3`.
+The module History depend primarily on MySQL.
 
 ''''
 Coming Soon

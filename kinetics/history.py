@@ -158,6 +158,7 @@ def testDatabaseQuery():
 	result1, result2 = hr.queryDatabase(queryDict)
 	print(result1, result2)
 
-# if __name__ == "__main__":
-# 	print("HERE!")
-# 	testDatabaseQuery()
+if __name__ == "__main__":
+	testDatabaseQuery()
+	
+>>>>>>> 5317a1df4fb6df158f9d9d586eaeb6db45930a6b
