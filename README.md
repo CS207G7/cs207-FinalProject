@@ -149,7 +149,9 @@ Note that for privacy consideration, you can compute reaction rate without uploa
 from kinetics import chemkin
 
 T = 750
-X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
+
+# length of X should equal to the number of species
+X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5] 
 
 # this will compute the results and upload to the database automatically
 compute('your/path/to/xml/file', T, X) 
