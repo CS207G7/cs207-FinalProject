@@ -94,7 +94,7 @@ For reversible elementary reactions the rate of change follows the form:
 
 A Complete Example
 ------------
-The following code sinppet shows an entire example that computes the reaction rate:
+The following code snippet shows an entire example that computes the reaction rate:
 
 ```python
 from kinetics.chemkin import Reaction, ReactionParser, ChemKin
@@ -108,21 +108,23 @@ rrs = ChemKin.reaction_rate(V1, V2, X, k)
 print ( rrs )
 ```
 
-Future Features
+New Feature : Centralized History!
 ------------
 ### Motivation and Feature Description
 
-Our team developed a feature able to keep track of all the elementary reactions computed by a user.
+For too long, chemists around the world have had to run all their reaction rates individually, with no idea what others were running, and no way to easily share their work. In order to save on computational complexity and runtime, we have developed a feature that records all the details of any reaction set that is run.
 
-The feature efficiently browses into a list of reactions that have been computed and it sorts them by elements of interest such as species, temperature, date, and reversible or non-reversible reactions.
+Our library will keep track of all elementary reactions computed by a user, and then store those in a central database for later access by not only the original user, but also anyone else around the world.
 
-We think that the feature will be really useful for scientists interested in building their own database of elementary reactions. Indeed, the devised feature allow the user to explore reactions without the need for computing again. Beside saving time for the computation, the user might grow its own database and share it with other users.
+In order to make this accessible to everyone, we have developed a beautiful web interface allowing users to search based on specie, temperature, and reversible/non-reversible reactions.
+
+We think that the feature will be really useful for scientists interested in building their own database of elementary reactions. Indeed, the devised feature allow the user to explore reactions without the need for computing again.
 
 Our feature ultimately allows the user to find quickly the information related to the reactions already computed.
 
 ### Feature and Code Base
 
-he feature fits into our code base because it stores each reaction computed by chemkin. Our feature stores them in a database adjacent to the one with NASA polynomials. The code allows the user to find reactions choosing among different element of interests.
+As the user continues to enjoy the benefits of chemkin for caulating reactions, our feature seamlessly uploads results to the central database each time chemkin is run. Our feature stores them in a database similar to the one used for NASA polynomials, but hosted on the cloud to be available for anyone. The website then allows the user to find reactions choosing among different element of interests.
 
 ### Module: History.py
 
