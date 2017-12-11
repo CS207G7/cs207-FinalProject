@@ -140,7 +140,21 @@ The user cannot access directely to the methods because they are performed "unde
 
 The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc). The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, and clicking the search button, the the details of the reactions that match the query will be retrieved from the cloud database. The following screenshot shows the webpage.
 
-<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/webapp.jpg" width="40%">
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/webapp.jpg" width="60%">
+
+Note that for privacy consideration, you can compute reaction rate without uploading them to the central database, to do so, just follow the example showed in the above "A Complete Example" section. However, we also provide a easy API for you to compute and upload the results.
+
+```python
+
+from kinetics import chemkin
+
+T = 750
+X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5]
+
+# this will compute the results and upload to the database automatically
+compute('your/path/to/xml/file', T, X) 
+
+```
 
 
 ### External Dependencies
