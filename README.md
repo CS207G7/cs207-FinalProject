@@ -139,7 +139,8 @@ The user cannot access directely to the methods because they are performed "unde
 ### User's Experience
 
 The user can query any information contained in the reactions that have been computed. For instance, the user can find all the reactions sort by elements of interest (e.g. type, species in the reactions, temperature of the reactions, etc). The feature allows for querying three different categories: species, reaction and temperature. After selecting the filters, and clicking the search button, the the details of the reactions that match the query will be retrieved from the cloud database. The following screenshot shows the webpage.
-<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/webapp" width="40%">
+
+<img src="https://github.com/CS207G7/cs207-FinalProject/blob/master/webapp.jpg" width="40%">
 
 
 ### External Dependencies
