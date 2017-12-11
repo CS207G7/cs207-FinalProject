@@ -99,8 +99,9 @@ class HistoryReader:
 		self.db = pymysql.connect(self.host, user=self.user, port=self.port, passwd=self.password, db=self.dbname)
 
 	def getCursor(self):
+		#If cursor has timed out or closed that we're aware of, reconnect
 	    if not self.db.open:
-	        self.db = pymysql.connect(host, user=user,port=port, passwd=password, db=dbname)
+	        self.db = pymysql.connect(self.host, user=self.user,port=self.port, passwd=self.password, db=self.dbname)
 	    return self.db.cursor()
 
 	# DEAL WITH SPACES
@@ -143,6 +144,8 @@ class HistoryReader:
 	    return query_sets, query_reactions
 
 	def queryDatabase(self, dictionary):
+		#Take a dictionary, turn it into a query, then return the reaction_sets and reactions in those sets 
+		#that satisfy the query
 	    query1, query2 = self.buildQueriesFromDict(dictionary)
 	    cursor = self.getCursor()
 	    cursor.execute(query1)
