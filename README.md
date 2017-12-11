@@ -14,9 +14,14 @@ This `chemkin` is a collection of algorithms aimed at predicting the time evolut
 
 Installation
 ------------
-1. Install the package `pip3 install cs207_g7`, and `from kinetics import chemkin`, and you can access any function you wish. Notice that for this installation method, to run the test suite, you need to navigate to the root foler of this package.
-2. Clone the repo, and run `python3 setup.py install`, to run the test suite, run `python3 setup.py test`.
-3. If you are interested in contributing, please ... follow the instructions.
+Install the package with `pip3 install cs207_g7`, and then `from kinetics import chemkin` and you can access any function you wish.
+
+How to Run Tests
+------------
+If you would like run tests, please use the following steps:
+1. Clone our github repository to your local computer
+2. Navigate into the cs207-FinalProject folder
+3. pytest kinetics 
 
 Main Utilities
 ------------
@@ -154,7 +159,7 @@ T = 750
 X = [2, 1, 0.5, 1, 1 ,0.5, 0.5, 0.5] 
 
 # this will compute the results and upload to the database automatically
-compute('your/path/to/xml/file', T, X) 
+chemkin.compute('your/path/to/xml/file', T, X) 
 
 ```
 
@@ -163,13 +168,6 @@ Note that for privacy consideration, you can compute reaction rate without uploa
 ### External Dependencies
 
 The history module depends primarily on a MySQL instance hosted on AWS, and a web interface built with Django and also hosted on AWS. All external libraries required for this addin at the user level (only pymysql) should be automatically installed along with cs207_g7.
-
-### How to Run Tests
-
-If you would like run tests, please use the following steps:
-1. Clone our github repository to your local computer
-2. Navigate into the cs207-FinalProject folder
-3. pytest kinetics 
 
 ### How to Contribute!
 
