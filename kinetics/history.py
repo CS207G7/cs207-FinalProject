@@ -1,8 +1,10 @@
 import time
 import pymysql	
 
-class History:
-	
+class History: # pragma: no cover
+# History class is only used for writing to the database - therefore we exlude it from testing
+# so as not to accidentally write values to the database
+
 	def __init__(self, filename, reactions_set, T, X, rr):
 		self.filename = filename
 		self.reactions = reactions_set.reactions
@@ -126,7 +128,7 @@ class HistoryReader:
 	        if reversible == 'reversible' or reversible == 'non_reversible':
 	            query_set = '''SELECT DISTINCT reaction_set_id FROM reaction ''' + \
 	                '''WHERE reversibility = {}'''.format(reversible == 'reversible')
-	            constraints.append('''reaction_set_id IN ({})'''.format(query_set))
+	            constraints.append('''A.reaction_set_id IN ({})'''.format(query_set))
 	    
 	    #Turn constraints into a query
 	    for i, constraint in enumerate(constraints):
@@ -135,7 +137,7 @@ class HistoryReader:
 	        else:
 	            query += " AND " + constraint
 	    
-	    query_sets = "SELECT * FROM reaction_set" + query
+	    query_sets = "SELECT * FROM reaction_set A " + query
 	    query_reactions = "SELECT B.* FROM reaction_set A LEFT JOIN reaction B ON A.reaction_set_id = B.reaction_set_id" + query
 	    
 	    return query_sets, query_reactions
@@ -149,16 +151,14 @@ class HistoryReader:
 	    B = cursor.fetchall()
 	    return A, B
 
-def testDatabaseQuery():
+def testDatabaseQuery(): # pragma: no cover
 	hr = HistoryReader()
 	queryDict = {'species': None, 'temp': None, 'type': None}
 	#queryDict['species'] = ["H", "O"]
-	queryDict['temp'] = {'T': 1600, 'cmp': '<'}
-	#queryDict['type'] = 'non_reversible'
+	#queryDict['temp'] = {'T': 1500, 'cmp': '<'}
+	queryDict['type'] = 'non_reversible'
 	result1, result2 = hr.queryDatabase(queryDict)
-	print(result1, result2)
+	print(result1)#, result2)
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
 	testDatabaseQuery()
-	
->>>>>>> 5317a1df4fb6df158f9d9d586eaeb6db45930a6b
