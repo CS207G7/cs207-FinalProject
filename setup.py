@@ -28,7 +28,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.1.0',
+    version='1.1.5',
 
     description='A simple chemical kinetics library',
     long_description=long_description,
@@ -95,6 +95,8 @@ setup(
     # have to be included in MANIFEST.in as well.
     package_data={
         'kinetics': ['data/NASA.sqlite'],
+        #'kinetics': ['test/test_*.py'],
+        #'kinetics': ['test/xml/*.xml'],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may

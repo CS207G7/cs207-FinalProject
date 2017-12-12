@@ -43,15 +43,17 @@ class History: # pragma: no cover
 
 	def write_reaction_set(self, cursor, timestamp):
 		#Write each reaction_set to the database
-		cursor.execute('''CREATE TABLE IF NOT EXISTS reaction_set (
-		    reaction_set_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-		    filename INT NOT NULL,
-		    num_reactions INTEGER NOT NULL,
-		    species TEXT NOT NULL,
-		    concentration TEXT NOT NULL,
-		    T REAL NOT NULL,
-		    reaction_rate TEXT NOT NULL,
-		    createdAt DATETIME NOT NULL)''')
+
+        #Create table if doesn't already exist
+		#cursor.execute('''CREATE TABLE IF NOT EXISTS reaction_set (
+		#    reaction_set_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+		#    filename INT NOT NULL,
+		#    num_reactions INTEGER NOT NULL,
+		#    species TEXT NOT NULL,
+		#    concentration TEXT NOT NULL,
+		#    T REAL NOT NULL,
+		#    reaction_rate TEXT NOT NULL,
+		#    createdAt DATETIME NOT NULL)''')
 		
 		vals_to_insert = (self.filename, len(self.reactions), str(self.species), \
 						  str(self.X), self.T, str(self.rr), timestamp)
@@ -65,16 +67,18 @@ class History: # pragma: no cover
 
 	def write_reaction(self, cursor, timestamp, reaction_set_id, **kwargs):
 		#Write each reaction to the database
-		cursor.execute('''CREATE TABLE IF NOT EXISTS reaction (
-		    reaction_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-		    reaction_set_id INTEGER NOT NULL,
-		    type TEXT NOT NULL, 
-		    reversibility BIT NOT NULL, 
-		    equation TEXT NOT NULL, 
-		    coeff_params TEXT NOT NULL,
-		    v1 TEXT NOT NULL,
-		    v2 TEXT NOT NULL,
-		    createdAt DATETIME NOT NULL)''')
+
+        #Create table if doesn't currently exist
+		#cursor.execute('''CREATE TABLE IF NOT EXISTS reaction (
+		#    reaction_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+		#    reaction_set_id INTEGER NOT NULL,
+		#    type TEXT NOT NULL, 
+		#    reversibility BIT NOT NULL, 
+		#    equation TEXT NOT NULL, 
+		#    coeff_params TEXT NOT NULL,
+		#    v1 TEXT NOT NULL,
+		#    v2 TEXT NOT NULL,
+		#    createdAt DATETIME NOT NULL)''')
 	
 		coeff_params, reaction_type, reversibility, equation, v1, v2 = \
 			kwargs['coeff_params'], kwargs['reaction_type'], \
@@ -115,7 +119,7 @@ class HistoryReader:
 	        if type(species) is not list:
 	            species = [species]
 	        for specie in list(species):
-	            constraints.append('''species LIKE '%{}%\''''.format(specie))
+	            constraints.append('''species LIKE '%{}%\''''.format(specie.strip()))
 
 	    #Temperature in given range
 	    temp = dictionary['temp']
